@@ -42,7 +42,7 @@
   width: 100%;
 }
 
-.videosList {
+.lessons {
   border-radius: 10px;
   justify-content: center;
   align-items: center;
@@ -50,6 +50,7 @@
   flex-direction: column;
   width: 460px;
   height: fit-content;
+  
   p {
     font-size: 20px;
   }
@@ -105,21 +106,13 @@
 
   .videoList {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 25px;
-    width: 100%;
-  }
-
-  .videoList {
-    display: flex;
     flex-direction: column;
     justify-content: space-around;
     gap: 25px;
     width: 100%;
   }
 
-  .videosList {
+  .lessons {
     border-radius: 10px;
     justify-content: center;
     align-items: center;
@@ -136,32 +129,19 @@
 
 @media (max-width: 1000px) {
   .title {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    background-color: orange;
-    border-radius: 200px;
-    justify-content: center;
     padding-left: 20px;
 
     p {
-      font-weight: 700;
       font-size: 28px;
     }
   }
 }
+
 @media (max-width: 480px) {
   .title {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    background-color: orange;
-    border-radius: 200px;
-    justify-content: center;
     padding: 20px;
 
     p {
-      font-weight: 700;
       font-size: 20px;
     }
   }

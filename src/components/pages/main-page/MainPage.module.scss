@@ -1,27 +1,28 @@
-.mainContainer{
-    width: 100%;
+.mainContainer {
+  width: 100%;
 }
-.coursesContainer{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
-    flex-wrap: wrap;
-    padding: 30px 20px 50px 20px;
+
+.coursesContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  flex-wrap: wrap;
+  padding: 30px 20px 50px 20px;
 }
 
 .card {
-    display: flex;
-    text-decoration: none;
-    color: inherit;
+  display: flex;
+  text-decoration: none;
+  color: inherit;
 }
 
-.paginate{
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    margin-bottom: 20px;
+.paginate {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  margin-bottom: 20px;
 }

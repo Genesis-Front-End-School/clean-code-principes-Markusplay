@@ -17,8 +17,17 @@ const CoursePage = () => {
   const lessons = useAppSelector(selectDetails);
   const videoRef = useRef<HTMLVideoElement>(null);
   const video = videoRef.current;
-
   const dispatch = useAppDispatch();
+
+  let sortedLessons;
+  if (lessons) {
+    sortedLessons = lessons.lessons.slice().sort((a, b) => a.order - b.order);
+  }
+
+  const poster = sortedLessons?.[currentLesson]?.previewImageLink
+    ? `${sortedLessons?.[currentLesson]?.previewImageLink}/lesson-${sortedLessons?.[currentLesson]?.order}.webp`
+    : './not-found.png';
+
   useEffect(() => {
     dispatch(
       fetchLessons({
@@ -27,13 +36,6 @@ const CoursePage = () => {
     );
   }, [courseId, dispatch]);
 
-  let sortedLessons;
-  if (lessons) {
-    sortedLessons = lessons.lessons.slice().sort((a, b) => a.order - b.order);
-  }
-  const poster = sortedLessons?.[currentLesson]?.previewImageLink
-    ? `${sortedLessons?.[currentLesson]?.previewImageLink}/lesson-${sortedLessons?.[currentLesson]?.order}.webp`
-    : './not-found.png';
   useEffect(() => {
     const handleKeyDown = (event: {
       key: string;
@@ -98,7 +100,7 @@ const CoursePage = () => {
             </div>
           </div>
         </div>
-        <div className={styles.videosList}>
+        <div className={styles.lessons}>
           <h4 className={styles.content}>Lessons:</h4>
           {sortedLessons?.map((lesson, index) => (
             <ListLessons

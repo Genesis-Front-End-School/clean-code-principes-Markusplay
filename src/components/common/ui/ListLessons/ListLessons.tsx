@@ -33,11 +33,7 @@ const ListLessons: React.FC<ListLessonsProps> = ({
           <Button
             className={styles.button}
             disabled={disabled}
-            endIcon={
-              <BlockIcon
-                style={{ width: '24px', height: '24px', marginBottom: '10px' }}
-              />
-            }
+            endIcon={<BlockIcon className={styles.blockIcon} />}
             onClick={() => {
               setCurrentLesson(order - 1);
               window.scrollTo(0, 0);
@@ -50,7 +46,6 @@ const ListLessons: React.FC<ListLessonsProps> = ({
         <div className={styles.item}>
           <video
             className={styles.video}
-            style={{ width: '100%', height: 'fit-content' }}
             poster={previewImageLink ? previewImageLink : './not-found.png'}
           />
           <div className={styles.time}>
@@ -61,17 +56,10 @@ const ListLessons: React.FC<ListLessonsProps> = ({
             color="error"
             variant="contained"
             className={styles.button}
-            style={{
-              fontWeight: 'bold',
-              borderRadius: '5px',
-              marginTop: '15px',
-              width: '100%',
-              height: 'fit-content',
-            }}
             disabled={disabled}
             endIcon={
               <ArrowCircleUpOutlinedIcon
-                style={{ width: '24px', height: '24px' }}
+                className={styles.arrowCircleUpOutlinedIcon}
               />
             }
             onClick={() => {

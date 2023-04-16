@@ -1,5 +1,4 @@
-import React from 'react';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import AssignmentIcon from '@mui/icons-material/Assignment';
@@ -9,6 +8,7 @@ import Hls from 'hls.js';
 import Link from 'next/link';
 
 import styles from './CourseCard.module.scss';
+
 interface CourseCardProps {
   id: string;
   tags: string[];
