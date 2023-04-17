@@ -16,15 +16,20 @@ export interface ListLessonsProps {
 }
 
 const ListLessons: React.FC<ListLessonsProps> = ({
-  duration,
-  setCurrentLesson,
   title = 'video',
-  disabled,
   previewImageLink,
+  setCurrentLesson,
+  disabled,
   order,
+  duration,
 }) => {
   const minutes = Math.floor(duration / 60);
   const seconds = duration - minutes * 60;
+
+  const handleClick = () => {
+    setCurrentLesson(order - 1);
+    window.scrollTo(0, 0);
+  };
 
   return (
     <div className={styles.list}>
@@ -34,10 +39,7 @@ const ListLessons: React.FC<ListLessonsProps> = ({
             className={styles.button}
             disabled={disabled}
             endIcon={<BlockIcon className={styles.blockIcon} />}
-            onClick={() => {
-              setCurrentLesson(order - 1);
-              window.scrollTo(0, 0);
-            }}
+            onClick={handleClick}
           >
             <p className={styles.title}>{title}</p>
           </Button>
@@ -62,10 +64,7 @@ const ListLessons: React.FC<ListLessonsProps> = ({
                 className={styles.arrowCircleUpOutlinedIcon}
               />
             }
-            onClick={() => {
-              setCurrentLesson(order - 1);
-              window.scrollTo(0, 0);
-            }}
+            onClick={handleClick}
           >
             <p className={styles.title}>{title}</p>
           </Button>

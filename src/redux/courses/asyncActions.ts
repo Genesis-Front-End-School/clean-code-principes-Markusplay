@@ -7,7 +7,6 @@ import { Course } from '../type';
 
 export const fetchCourses = createAsyncThunk<Course[]>(
   'courses/getCourses',
-
   async () => {
     try {
       const { data } = await axiosInstance.get<{ courses: Course[] }>(

@@ -16,14 +16,10 @@ interface CourseCardProps {
   description: string;
   duration: number;
   image: string;
-  launchDate?: string;
   lessonsCount: number;
-  containsLockedLessons: boolean;
   skills?: string[];
   rating: number;
-  slug: string;
   videoPreviewLink: string;
-  videoPreviewDuration: number;
   videoPreviewImageLink: string;
 }
 
@@ -32,15 +28,15 @@ const CourseCard: React.FC<CourseCardProps> = ({
   tags,
   title,
   description,
-  skills,
-  image,
   duration,
+  image,
   lessonsCount,
+  skills,
   rating,
   videoPreviewLink,
   videoPreviewImageLink,
 }) => {
-  const [isBroken, setIsBroken] = useState(false);
+  const [isVideoLinkBroken, setIsVideoLinkBroken] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const minutes = Math.floor(duration / 60);
   const seconds = duration - minutes * 60;
@@ -57,7 +53,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
       const hls = new Hls();
 
       hls.on(Hls.Events.ERROR, function () {
-        setIsBroken(true);
+        setIsVideoLinkBroken(true);
       });
       hls.loadSource(videoPreviewLink);
       hls.attachMedia(video);
@@ -84,7 +80,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
         ref={videoRef}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        poster={!isBroken ? poster : './not-found.png'}
+        poster={!isVideoLinkBroken ? poster : './not-found.png'}
         muted
       />
 
@@ -92,8 +88,8 @@ const CourseCard: React.FC<CourseCardProps> = ({
         <p className={styles.title}>{title}</p>
 
         <div className={styles.tags}>
-          {tags.map((tag, index) => (
-            <b className={styles.tag} key={index}>
+          {tags.map(tag => (
+            <b className={styles.tag} key={tag}>
               {tag}
             </b>
           ))}
@@ -123,8 +119,8 @@ const CourseCard: React.FC<CourseCardProps> = ({
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {skills?.map((skill, index) => (
-                <i className={styles.skill} key={index}>
+              {skills?.map(skill => (
+                <i className={styles.skill} key={skill}>
                   {skill}
                 </i>
               ))}

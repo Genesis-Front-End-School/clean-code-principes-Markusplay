@@ -7,7 +7,6 @@ import { FetchLessonsParams, Lessons } from './type';
 
 export const fetchLessons = createAsyncThunk<Lessons, FetchLessonsParams>(
   'lessons/getLessons',
-
   async params => {
     try {
       const { data } = await axiosInstance.get<Lessons>(

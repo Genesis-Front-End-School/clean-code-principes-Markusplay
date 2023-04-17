@@ -7,6 +7,7 @@ import ListLessons from '@/components/common/ui/ListLessons';
 import { useAppDispatch, useAppSelector } from '@/hooks/useSelect';
 import { fetchLessons } from '@/redux/lessons/asyncActions';
 import { selectDetails } from '@/redux/lessons/selectors';
+import { Lesson } from '@/redux/lessons/type';
 
 import styles from './CoursePage.module.scss';
 
@@ -19,10 +20,14 @@ const CoursePage = () => {
   const video = videoRef.current;
   const dispatch = useAppDispatch();
 
-  let sortedLessons;
-  if (lessons) {
-    sortedLessons = lessons.lessons.slice().sort((a, b) => a.order - b.order);
-  }
+  const sortLessons = (lessons: Lesson[] | undefined) => {
+    if (lessons) {
+      return lessons.slice().sort((a, b) => a.order - b.order);
+    }
+    return [];
+  };
+
+  const sortedLessons = sortLessons(lessons?.lessons);
 
   const poster = sortedLessons?.[currentLesson]?.previewImageLink
     ? `${sortedLessons?.[currentLesson]?.previewImageLink}/lesson-${sortedLessons?.[currentLesson]?.order}.webp`
@@ -37,10 +42,7 @@ const CoursePage = () => {
   }, [courseId, dispatch]);
 
   useEffect(() => {
-    const handleKeyDown = (event: {
-      key: string;
-      preventDefault: () => void;
-    }) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === '1' && video?.playbackRate) {
         event.preventDefault();
         if (video?.playbackRate < 2) {
@@ -102,12 +104,12 @@ const CoursePage = () => {
         </div>
         <div className={styles.lessons}>
           <h4 className={styles.content}>Lessons:</h4>
-          {sortedLessons?.map((lesson, index) => (
+          {sortedLessons?.map(lesson => (
             <ListLessons
               duration={lesson.duration}
               setCurrentLesson={setCurrentLesson}
               order={lesson.order}
-              key={index}
+              key={lesson.id}
               title={lesson.title}
               disabled={lesson.status !== 'unlocked'}
               previewImageLink={`${lesson.previewImageLink}/lesson-${lesson.order}.webp`}
