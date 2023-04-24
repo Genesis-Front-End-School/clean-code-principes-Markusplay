@@ -1,0 +1,56 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  width: 100%;
+  height: fit-content;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.video {
+  width: 100%;
+  max-height: 250px;
+  height: fit-content;
+}
+
+.time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.item {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 40px;
+  border: 1px solid brown;
+}
+
+.arrowCircleUpOutlinedIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.blockIcon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 720px) {
+  .video {
+    width: 100%;
+    height: fit-content;
+  }
+}
