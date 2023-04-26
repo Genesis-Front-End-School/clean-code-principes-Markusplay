@@ -17,7 +17,7 @@ const MainPage = () => {
         new Date(b.launchDate).valueOf() - new Date(a.launchDate).valueOf(),
     );
   const coursesPerPage = 10;
-  const pagesVisited = (pageNumber - 1) * coursesPerPage;
+  const visitedPages = (pageNumber - 1) * coursesPerPage;
   const pageCount = Math.ceil(courses?.length / coursesPerPage);
   const dispatch = useAppDispatch();
 
@@ -35,8 +35,8 @@ const MainPage = () => {
       <CoursesPerPage
         className={styles.coursesContainer}
         courses={courses}
-        pagesVisited={pagesVisited}
         coursesPerPage={coursesPerPage}
+        visitedPages={visitedPages}
       />
       <div className={styles.paginate}>
         <Pagination

@@ -6,21 +6,21 @@ import CourseCard from '../CourseCard';
 
 interface CoursesPerPageProps {
   courses: Course[];
-  pagesVisited: number;
+  visitedPages: number;
   coursesPerPage: number;
   className: string;
 }
 
 const CoursesPerPage: FC<CoursesPerPageProps> = ({
   courses,
-  pagesVisited,
+  visitedPages,
   coursesPerPage,
   className,
 }) => {
   return (
     <div className={className}>
       {courses
-        .slice(pagesVisited, pagesVisited + coursesPerPage)
+        .slice(visitedPages, visitedPages + coursesPerPage)
         .map(course => (
           <CourseCard
             id={course.id}

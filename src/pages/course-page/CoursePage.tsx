@@ -10,9 +10,13 @@ import { selectDetails } from '@/redux/lessons/selectors';
 import { Lesson } from '@/redux/lessons/type';
 
 import styles from './CoursePage.module.scss';
-const enum Keys {
+const enum VideoPlayerKeys {
   SPEED_UP = '1',
   SLOW_DOWN = '0',
+  SPEED_UP_STEP = 0.1,
+  SLOW_DOWN_STEP = 0.1,
+  MAX_SPEED = 2,
+  MIN_SPEED = 0.5,
 }
 
 const CoursePage = () => {
@@ -59,12 +63,20 @@ const CoursePage = () => {
     const handleKeyDown = (event: KeyboardEvent) => {
       event.preventDefault();
 
-      if (event.key === Keys.SPEED_UP && video && video.playbackRate < 2) {
-        video.playbackRate += 0.1;
+      if (
+        event.key === VideoPlayerKeys.SPEED_UP &&
+        video &&
+        video.playbackRate < VideoPlayerKeys.MAX_SPEED
+      ) {
+        video.playbackRate += VideoPlayerKeys.SPEED_UP_STEP;
       }
 
-      if (event.key === Keys.SLOW_DOWN && video && video.playbackRate > 0.5) {
-        video.playbackRate -= 0.1;
+      if (
+        event.key === VideoPlayerKeys.SLOW_DOWN &&
+        video &&
+        video.playbackRate > VideoPlayerKeys.MIN_SPEED
+      ) {
+        video.playbackRate -= VideoPlayerKeys.SLOW_DOWN_STEP;
       }
     };
 
@@ -85,14 +97,16 @@ const CoursePage = () => {
           </h3>
           <video
             className={styles.myVideo}
-            controls={true}
+            controls
             poster={poster}
             ref={videoRef}
-          ></video>
+          />
           <div className={styles.courseInfo}>
             <div>
-              <h6>*To speed up the video, press 1</h6>
-              <h6>*To slow down the video, press 0</h6>
+              <h6>*To speed up the video, press {VideoPlayerKeys.SPEED_UP}</h6>
+              <h6>
+                *To slow down the video, press {VideoPlayerKeys.SLOW_DOWN}
+              </h6>
             </div>
             <div>
               <h6 className={styles.date}>
