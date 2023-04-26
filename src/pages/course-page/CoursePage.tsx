@@ -10,6 +10,10 @@ import { selectDetails } from '@/redux/lessons/selectors';
 import { Lesson } from '@/redux/lessons/type';
 
 import styles from './CoursePage.module.scss';
+const enum Keys {
+  SPEED_UP = '1',
+  SLOW_DOWN = '0',
+}
 
 const CoursePage = () => {
   const router = useRouter();
@@ -33,6 +37,16 @@ const CoursePage = () => {
     ? `${sortedLessons?.[currentLesson]?.previewImageLink}/lesson-${sortedLessons?.[currentLesson]?.order}.webp`
     : './not-found.png';
 
+  if (video && sortedLessons?.[currentLesson]?.previewImageLink) {
+    const hls = new Hls();
+
+    if (!sortedLessons?.[currentLesson].link) {
+      router.push('/404');
+    }
+    hls.loadSource(sortedLessons?.[currentLesson].link || '');
+    hls.attachMedia(video);
+  }
+
   useEffect(() => {
     dispatch(
       fetchLessons({
@@ -43,16 +57,14 @@ const CoursePage = () => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === '1' && video?.playbackRate) {
-        event.preventDefault();
-        if (video?.playbackRate < 2) {
-          video.playbackRate += 0.1;
-        }
-      } else if (event.key === '0' && video?.playbackRate) {
-        event.preventDefault();
-        if (video?.playbackRate > 0.5) {
-          video.playbackRate -= 0.1;
-        }
+      event.preventDefault();
+
+      if (event.key === Keys.SPEED_UP && video && video.playbackRate < 2) {
+        video.playbackRate += 0.1;
+      }
+
+      if (event.key === Keys.SLOW_DOWN && video && video.playbackRate > 0.5) {
+        video.playbackRate -= 0.1;
       }
     };
 
@@ -62,15 +74,6 @@ const CoursePage = () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [video]);
-
-  if (video && sortedLessons?.[currentLesson].previewImageLink) {
-    const hls = new Hls();
-    if (!sortedLessons?.[currentLesson].link) {
-      router.push('/404');
-    }
-    hls.loadSource(sortedLessons?.[currentLesson].link || '');
-    hls.attachMedia(video);
-  }
 
   return (
     <div className={styles.page}>

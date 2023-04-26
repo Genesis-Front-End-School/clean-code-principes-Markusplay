@@ -1,4 +1,4 @@
-import CoursePage from '@/components/pages/course-page';
+import CoursePage from '../course-page';
 
 const Course = () => <CoursePage />;
 

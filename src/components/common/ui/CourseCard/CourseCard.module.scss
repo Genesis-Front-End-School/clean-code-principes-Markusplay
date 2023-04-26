@@ -82,6 +82,11 @@
   color: brown;
 }
 
+.skillsList {
+  display: flex;
+  flex-direction: column;
+}
+
 .skills {
   display: flex;
   flex-direction: column;
@@ -114,7 +119,6 @@
   display: flex;
   text-decoration: none;
   width: 100%;
-  justify-content: center;
 }
 
 .tagRating {
@@ -125,6 +129,11 @@
   width: 100%;
   bottom: 0;
   margin-bottom: 10px;
+}
+
+.assignmentIcon {
+  display: flex;
+  gap: 10px;
 }
 
 @media (max-width: 480px) {

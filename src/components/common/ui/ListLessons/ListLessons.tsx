@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, FC, SetStateAction } from 'react';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined';
 import BlockIcon from '@mui/icons-material/Block';
@@ -9,13 +9,13 @@ import styles from './ListLessons.module.scss';
 export interface ListLessonsProps {
   title: string;
   previewImageLink: string;
-  setCurrentLesson: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentLesson: Dispatch<SetStateAction<number>>;
   disabled: boolean;
   order: number;
   duration: number;
 }
 
-const ListLessons: React.FC<ListLessonsProps> = ({
+const ListLessons: FC<ListLessonsProps> = ({
   title = 'video',
   previewImageLink,
   setCurrentLesson,
@@ -34,16 +34,14 @@ const ListLessons: React.FC<ListLessonsProps> = ({
   return (
     <div className={styles.list}>
       {disabled ? (
-        <>
-          <Button
-            className={styles.button}
-            disabled={disabled}
-            endIcon={<BlockIcon className={styles.blockIcon} />}
-            onClick={handleClick}
-          >
-            <p className={styles.title}>{title}</p>
-          </Button>
-        </>
+        <Button
+          className={styles.button}
+          disabled={disabled}
+          endIcon={<BlockIcon className={styles.blockIcon} />}
+          onClick={handleClick}
+        >
+          <p className={styles.title}>{title}</p>
+        </Button>
       ) : (
         <div className={styles.item}>
           <video

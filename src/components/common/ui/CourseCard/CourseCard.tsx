@@ -1,11 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import { Button, Rating } from '@mui/material';
 import Hls from 'hls.js';
-import Link from 'next/link';
 
 import styles from './CourseCard.module.scss';
 
@@ -23,7 +22,7 @@ interface CourseCardProps {
   videoPreviewImageLink: string;
 }
 
-const CourseCard: React.FC<CourseCardProps> = ({
+const CourseCard: FC<CourseCardProps> = ({
   id,
   tags,
   title,
@@ -38,6 +37,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
 }) => {
   const [isVideoLinkBroken, setIsVideoLinkBroken] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const video = videoRef.current;
   const minutes = Math.floor(duration / 60);
   const seconds = duration - minutes * 60;
 
@@ -47,8 +47,6 @@ const CourseCard: React.FC<CourseCardProps> = ({
       : './not-found.png';
 
   const handleMouseEnter = () => {
-    const video = videoRef.current;
-
     if (video && videoPreviewImageLink) {
       const hls = new Hls();
 
@@ -64,7 +62,6 @@ const CourseCard: React.FC<CourseCardProps> = ({
   };
 
   const handleMouseLeave = () => {
-    const video = videoRef.current;
     if (video) {
       video.pause();
     }
@@ -98,7 +95,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
         <p className={styles.description}>{description}</p>
 
         <div className={styles.lessonsTime}>
-          <div style={{ display: 'flex', gap: '10px' }}>
+          <div className={styles.assignmentIcon}>
             {<AssignmentIcon />}
             <strong>{lessonsCount} lessons</strong>
           </div>
@@ -118,7 +115,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
               Skills
             </p>
 
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div className={styles.skillsList}>
               {skills?.map(skill => (
                 <i className={styles.skill} key={skill}>
                   {skill}
@@ -129,19 +126,15 @@ const CourseCard: React.FC<CourseCardProps> = ({
         )}
       </div>
       <div className={styles.tagRating}>
-        <Link href={`/preview-courses/${id}`} className={styles.button}>
-          <Button
-            variant="contained"
-            color="error"
-            style={{
-              width: 'calc(100% - 80px)',
-              marginTop: '20px',
-            }}
-            endIcon={<ArrowCircleRightIcon />}
-          >
-            Explore
-          </Button>
-        </Link>
+        <Button
+          className={styles.button}
+          href={`/preview-courses/${id}`}
+          variant="contained"
+          color="error"
+          endIcon={<ArrowCircleRightIcon />}
+        >
+          Explore
+        </Button>
         <div className={styles.rating}>
           <Rating
             name="read-only"

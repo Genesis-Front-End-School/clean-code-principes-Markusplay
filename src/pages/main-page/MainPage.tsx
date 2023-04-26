@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Pagination } from '@mui/material';
 
-import CourseCard from '@/components/common/ui/CourseCard/CourseCard';
+import CoursesPerPage from '@/components/common/ui/CoursePerPage/CoursesPerPage';
 import { useAppDispatch, useAppSelector } from '@/hooks/useSelect';
 import { fetchCourses } from '@/redux/courses/asyncActions';
 import { selectDetails } from '@/redux/courses/selectors';
@@ -25,36 +25,19 @@ const MainPage = () => {
     dispatch(fetchCourses());
   }, [dispatch]);
 
-  const handleChangePage = (
-    _event: React.ChangeEvent<unknown>,
-    value: number,
-  ) => {
+  const handleChangePage = (_event: ChangeEvent<unknown>, value: number) => {
     setPageNumber(value);
     window.scrollTo(0, 0);
   };
 
-  const displayCourses = courses
-    .slice(pagesVisited, pagesVisited + coursesPerPage)
-    .map(course => (
-      <CourseCard
-        id={course.id}
-        key={course.id}
-        title={course.title}
-        description={course.description}
-        duration={course.duration}
-        image={course.previewImageLink}
-        lessonsCount={course.lessonsCount}
-        skills={course.meta.skills}
-        rating={course.rating}
-        tags={course.tags}
-        videoPreviewLink={course.meta.courseVideoPreview?.link}
-        videoPreviewImageLink={course.meta.courseVideoPreview?.previewImageLink}
-      />
-    ));
-
   return (
     <div className={styles.mainContainer}>
-      <div className={styles.coursesContainer}>{displayCourses}</div>
+      <CoursesPerPage
+        className={styles.coursesContainer}
+        courses={courses}
+        pagesVisited={pagesVisited}
+        coursesPerPage={coursesPerPage}
+      />
       <div className={styles.paginate}>
         <Pagination
           count={pageCount}
