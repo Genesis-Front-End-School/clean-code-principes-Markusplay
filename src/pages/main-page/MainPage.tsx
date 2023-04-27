@@ -1,10 +1,11 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { Pagination } from '@mui/material';
 
 import CoursesPerPage from '@/components/common/ui/CoursePerPage/CoursesPerPage';
 import { useAppDispatch, useAppSelector } from '@/hooks/useSelect';
 import { fetchCourses } from '@/redux/courses/asyncActions';
 import { selectDetails } from '@/redux/courses/selectors';
+import { Courses_Per_Page_Limit } from '@/utils/constants/constants';
 
 import styles from './MainPage.module.scss';
 
@@ -16,9 +17,15 @@ const MainPage = () => {
       (a, b) =>
         new Date(b.launchDate).valueOf() - new Date(a.launchDate).valueOf(),
     );
-  const coursesPerPage = 10;
-  const visitedPages = (pageNumber - 1) * coursesPerPage;
-  const pageCount = Math.ceil(courses?.length / coursesPerPage);
+
+  const visitedPages = useMemo(() => {
+    return (pageNumber - 1) * Courses_Per_Page_Limit;
+  }, [pageNumber]);
+
+  const pageCount = useMemo(() => {
+    return Math.ceil(courses?.length / Courses_Per_Page_Limit);
+  }, [courses?.length]);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -35,7 +42,7 @@ const MainPage = () => {
       <CoursesPerPage
         className={styles.coursesContainer}
         courses={courses}
-        coursesPerPage={coursesPerPage}
+        coursesLimit={Courses_Per_Page_Limit}
         visitedPages={visitedPages}
       />
       <div className={styles.paginate}>

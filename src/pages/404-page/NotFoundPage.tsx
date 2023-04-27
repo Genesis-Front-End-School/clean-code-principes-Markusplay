@@ -1,4 +1,5 @@
 import { Button } from '@mui/material';
+import Link from 'next/link';
 
 import styles from './NotFoundPage.module.scss';
 
@@ -8,14 +9,11 @@ const NotFoundPage = () => (
       Упс! 404 помилка. Сторінку не знайдено.
     </h3>
     <div className={styles.button}>
-      <Button
-        className={styles.button}
-        href="/"
-        size="large"
-        variant="contained"
-      >
-        Повернутися на головну
-      </Button>
+      <Link href="/">
+        <Button className={styles.button} size="large" variant="contained">
+          Повернутися на головну
+        </Button>
+      </Link>
     </div>
   </div>
 );

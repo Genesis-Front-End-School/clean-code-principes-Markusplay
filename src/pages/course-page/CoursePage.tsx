@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import Hls from 'hls.js';
 import { useRouter } from 'next/router';
@@ -8,16 +8,9 @@ import { useAppDispatch, useAppSelector } from '@/hooks/useSelect';
 import { fetchLessons } from '@/redux/lessons/asyncActions';
 import { selectDetails } from '@/redux/lessons/selectors';
 import { Lesson } from '@/redux/lessons/type';
+import { VideoPlayerKeys } from '@/utils/constants/constants';
 
 import styles from './CoursePage.module.scss';
-const enum VideoPlayerKeys {
-  SPEED_UP = '1',
-  SLOW_DOWN = '0',
-  SPEED_UP_STEP = 0.1,
-  SLOW_DOWN_STEP = 0.1,
-  MAX_SPEED = 2,
-  MIN_SPEED = 0.5,
-}
 
 const CoursePage = () => {
   const router = useRouter();
@@ -28,6 +21,21 @@ const CoursePage = () => {
   const video = videoRef.current;
   const dispatch = useAppDispatch();
 
+  function changePlaybackRate(event: KeyboardEvent, video: HTMLVideoElement) {
+    switch (event.key) {
+      case VideoPlayerKeys.SPEED_UP:
+        video.playbackRate += VideoPlayerKeys.SPEED_UP_STEP;
+        break;
+
+      case VideoPlayerKeys.SLOW_DOWN:
+        video.playbackRate -= VideoPlayerKeys.SLOW_DOWN_STEP;
+        break;
+
+      default:
+        break;
+    }
+  }
+
   const sortLessons = (lessons: Lesson[] | undefined) => {
     if (lessons) {
       return lessons.slice().sort((a, b) => a.order - b.order);
@@ -35,7 +43,9 @@ const CoursePage = () => {
     return [];
   };
 
-  const sortedLessons = sortLessons(lessons?.lessons);
+  const sortedLessons = useMemo(() => {
+    return sortLessons(lessons?.lessons);
+  }, [lessons?.lessons]);
 
   const poster = sortedLessons?.[currentLesson]?.previewImageLink
     ? `${sortedLessons?.[currentLesson]?.previewImageLink}/lesson-${sortedLessons?.[currentLesson]?.order}.webp`
@@ -62,21 +72,12 @@ const CoursePage = () => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       event.preventDefault();
-
       if (
-        event.key === VideoPlayerKeys.SPEED_UP &&
         video &&
+        video.playbackRate > VideoPlayerKeys.MIN_SPEED &&
         video.playbackRate < VideoPlayerKeys.MAX_SPEED
       ) {
-        video.playbackRate += VideoPlayerKeys.SPEED_UP_STEP;
-      }
-
-      if (
-        event.key === VideoPlayerKeys.SLOW_DOWN &&
-        video &&
-        video.playbackRate > VideoPlayerKeys.MIN_SPEED
-      ) {
-        video.playbackRate -= VideoPlayerKeys.SLOW_DOWN_STEP;
+        changePlaybackRate(event, video);
       }
     };
 

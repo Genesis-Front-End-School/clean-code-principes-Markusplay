@@ -5,36 +5,35 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import { Button, Rating } from '@mui/material';
 import Hls from 'hls.js';
+import Link from 'next/link';
+
+import { Course } from '@/redux/type';
 
 import styles from './CourseCard.module.scss';
 
 interface CourseCardProps {
-  id: string;
-  tags: string[];
-  title: string;
-  description: string;
-  duration: number;
-  image: string;
-  lessonsCount: number;
-  skills?: string[];
-  rating: number;
-  videoPreviewLink: string;
-  videoPreviewImageLink: string;
+  courseData: Course;
 }
 
-const CourseCard: FC<CourseCardProps> = ({
-  id,
-  tags,
-  title,
-  description,
-  duration,
-  image,
-  lessonsCount,
-  skills,
-  rating,
-  videoPreviewLink,
-  videoPreviewImageLink,
-}) => {
+const CourseCard: FC<CourseCardProps> = ({ courseData }) => {
+  const {
+    id,
+    title,
+    tags,
+    description,
+    duration,
+    lessonsCount,
+    previewImageLink,
+    rating,
+    meta: {
+      skills,
+      courseVideoPreview: {
+        link: videoPreviewLink,
+        previewImageLink: videoPreviewImageLink,
+      },
+    },
+  } = courseData;
+
   const [isVideoLinkBroken, setIsVideoLinkBroken] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const video = videoRef.current;
@@ -69,10 +68,12 @@ const CourseCard: FC<CourseCardProps> = ({
 
   return (
     <div className={styles.courseCard}>
-      <img src={`${image}/cover.webp`} className={styles.courseImg}></img>
-
+      <img
+        src={`${previewImageLink}/cover.webp`}
+        className={styles.courseImg}
+      />
       <video
-        loop={true}
+        loop
         className={styles.courseVideo}
         ref={videoRef}
         onMouseEnter={handleMouseEnter}
@@ -80,10 +81,8 @@ const CourseCard: FC<CourseCardProps> = ({
         poster={!isVideoLinkBroken ? poster : './not-found.png'}
         muted
       />
-
       <div className={styles.courseInfo}>
         <p className={styles.title}>{title}</p>
-
         <div className={styles.tags}>
           {tags.map(tag => (
             <b className={styles.tag} key={tag}>
@@ -91,9 +90,7 @@ const CourseCard: FC<CourseCardProps> = ({
             </b>
           ))}
         </div>
-
         <p className={styles.description}>{description}</p>
-
         <div className={styles.lessonsTime}>
           <div className={styles.assignmentIcon}>
             {<AssignmentIcon />}
@@ -108,13 +105,10 @@ const CourseCard: FC<CourseCardProps> = ({
       <div className={styles.skills}>
         {skills && (
           <>
-            <p style={{ marginTop: '20px' }}>
-              <AutoFixHighIcon
-                style={{ marginRight: '10px', color: 'brown' }}
-              />
+            <p>
+              <AutoFixHighIcon className={styles.autoFixHighIcon} />
               Skills
             </p>
-
             <div className={styles.skillsList}>
               {skills?.map(skill => (
                 <i className={styles.skill} key={skill}>
@@ -126,15 +120,16 @@ const CourseCard: FC<CourseCardProps> = ({
         )}
       </div>
       <div className={styles.tagRating}>
-        <Button
-          className={styles.button}
-          href={`/preview-courses/${id}`}
-          variant="contained"
-          color="error"
-          endIcon={<ArrowCircleRightIcon />}
-        >
-          Explore
-        </Button>
+        <Link className={styles.button} href={`/preview-courses/${id}`}>
+          <Button
+            className={styles.button}
+            variant="contained"
+            color="error"
+            endIcon={<ArrowCircleRightIcon />}
+          >
+            Explore
+          </Button>
+        </Link>
         <div className={styles.rating}>
           <Rating
             name="read-only"
