@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined';
 import BlockIcon from '@mui/icons-material/Block';
@@ -23,8 +23,8 @@ const ListLessons: FC<ListLessonsProps> = ({
   order,
   duration,
 }) => {
-  const minutes = Math.floor(duration / 60);
-  const seconds = duration - minutes * 60;
+  const minutes: number = Math.floor(duration / 60);
+  const seconds: number = duration - minutes * 60;
 
   const handleClick = () => {
     setCurrentLesson(order - 1);

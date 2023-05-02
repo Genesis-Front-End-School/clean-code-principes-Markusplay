@@ -1,4 +1,4 @@
-export const Courses_Per_Page_Limit = 10;
+export const COURSES_PER_PAGE_LIMIT = 10;
 
 export const enum VideoPlayerKeys {
   SPEED_UP = '1',

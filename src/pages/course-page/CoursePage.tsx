@@ -7,43 +7,29 @@ import ListLessons from '@/components/common/ui/ListLessons';
 import { useAppDispatch, useAppSelector } from '@/hooks/useSelect';
 import { fetchLessons } from '@/redux/lessons/asyncActions';
 import { selectDetails } from '@/redux/lessons/selectors';
-import { Lesson } from '@/redux/lessons/type';
+import { Lesson, Lessons } from '@/redux/lessons/type';
+import { changePlaybackRate } from '@/utils/constants/changePlaybackRate';
 import { VideoPlayerKeys } from '@/utils/constants/constants';
 
 import styles from './CoursePage.module.scss';
 
 const CoursePage = () => {
   const router = useRouter();
-  const [currentLesson, setCurrentLesson] = useState(0);
-  const courseId = router.query.courseId as string;
-  const lessons = useAppSelector(selectDetails);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const video = videoRef.current;
+  const [currentLesson, setCurrentLesson] = useState<number>(0);
+  const courseId: string = router.query.courseId as string;
+  const lessons: Lessons | null = useAppSelector(selectDetails);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const video: HTMLVideoElement | null = videoRef.current;
   const dispatch = useAppDispatch();
 
-  function changePlaybackRate(event: KeyboardEvent, video: HTMLVideoElement) {
-    switch (event.key) {
-      case VideoPlayerKeys.SPEED_UP:
-        video.playbackRate += VideoPlayerKeys.SPEED_UP_STEP;
-        break;
-
-      case VideoPlayerKeys.SLOW_DOWN:
-        video.playbackRate -= VideoPlayerKeys.SLOW_DOWN_STEP;
-        break;
-
-      default:
-        break;
-    }
-  }
-
-  const sortLessons = (lessons: Lesson[] | undefined) => {
+  const sortLessons = (lessons: Lesson[] | undefined): Lesson[] => {
     if (lessons) {
       return lessons.slice().sort((a, b) => a.order - b.order);
     }
     return [];
   };
 
-  const sortedLessons = useMemo(() => {
+  const sortedLessons = useMemo((): Lesson[] => {
     return sortLessons(lessons?.lessons);
   }, [lessons?.lessons]);
 
