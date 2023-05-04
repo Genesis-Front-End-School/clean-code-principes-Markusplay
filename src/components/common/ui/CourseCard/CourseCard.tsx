@@ -34,11 +34,11 @@ const CourseCard: FC<CourseCardProps> = ({ courseData }) => {
     },
   } = courseData;
 
-  const [isVideoLinkBroken, setIsVideoLinkBroken] = useState<boolean>(false);
+  const [isVideoLinkBroken, setIsVideoLinkBroken] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const video = videoRef.current;
-  const minutes: number = Math.floor(duration / 60);
-  const seconds: number = duration - minutes * 60;
+  const minutes = Math.floor(duration / 60);
+  const seconds = duration - minutes * 60;
 
   const poster =
     videoPreviewLink || videoPreviewImageLink
