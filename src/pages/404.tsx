@@ -1,4 +1,4 @@
-import NotFoundPage from '@/components/pages/404-page';
+import NotFoundPage from './404-page';
 
 const NotFound = () => <NotFoundPage />;
 

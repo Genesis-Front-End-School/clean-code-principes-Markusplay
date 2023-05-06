@@ -9,7 +9,7 @@ const NotFoundPage = () => (
       Упс! 404 помилка. Сторінку не знайдено.
     </h3>
     <div className={styles.button}>
-      <Link href={'/'} style={{ textDecoration: 'none' }}>
+      <Link href="/">
         <Button className={styles.button} size="large" variant="contained">
           Повернутися на головну
         </Button>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import Hls from 'hls.js';
 import { useRouter } from 'next/router';
@@ -7,31 +7,45 @@ import ListLessons from '@/components/common/ui/ListLessons';
 import { useAppDispatch, useAppSelector } from '@/hooks/useSelect';
 import { fetchLessons } from '@/redux/lessons/asyncActions';
 import { selectDetails } from '@/redux/lessons/selectors';
-import { Lesson } from '@/redux/lessons/type';
+import { Lesson, Lessons } from '@/redux/lessons/type';
+import { changePlaybackRate } from '@/utils/constants/changePlaybackRate';
+import { VideoPlayerKeys } from '@/utils/constants/constants';
 
 import styles from './CoursePage.module.scss';
 
 const CoursePage = () => {
   const router = useRouter();
-  const [currentLesson, setCurrentLesson] = useState(0);
-  const courseId = router.query.courseId as string;
-  const lessons = useAppSelector(selectDetails);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const video = videoRef.current;
+  const [currentLesson, setCurrentLesson] = useState<number>(0);
+  const courseId: string = router.query.courseId as string;
+  const lessons: Lessons | null = useAppSelector(selectDetails);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const video: HTMLVideoElement | null = videoRef.current;
   const dispatch = useAppDispatch();
 
-  const sortLessons = (lessons: Lesson[] | undefined) => {
+  const sortLessons = (lessons: Lesson[] | undefined): Lesson[] => {
     if (lessons) {
       return lessons.slice().sort((a, b) => a.order - b.order);
     }
     return [];
   };
 
-  const sortedLessons = sortLessons(lessons?.lessons);
+  const sortedLessons = useMemo((): Lesson[] => {
+    return sortLessons(lessons?.lessons);
+  }, [lessons?.lessons]);
 
   const poster = sortedLessons?.[currentLesson]?.previewImageLink
     ? `${sortedLessons?.[currentLesson]?.previewImageLink}/lesson-${sortedLessons?.[currentLesson]?.order}.webp`
     : './not-found.png';
+
+  if (video && sortedLessons?.[currentLesson]?.previewImageLink) {
+    const hls = new Hls();
+
+    if (!sortedLessons?.[currentLesson].link) {
+      router.push('/404');
+    }
+    hls.loadSource(sortedLessons?.[currentLesson].link || '');
+    hls.attachMedia(video);
+  }
 
   useEffect(() => {
     dispatch(
@@ -43,16 +57,13 @@ const CoursePage = () => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === '1' && video?.playbackRate) {
-        event.preventDefault();
-        if (video?.playbackRate < 2) {
-          video.playbackRate += 0.1;
-        }
-      } else if (event.key === '0' && video?.playbackRate) {
-        event.preventDefault();
-        if (video?.playbackRate > 0.5) {
-          video.playbackRate -= 0.1;
-        }
+      event.preventDefault();
+      if (
+        video &&
+        video.playbackRate > VideoPlayerKeys.MIN_SPEED &&
+        video.playbackRate < VideoPlayerKeys.MAX_SPEED
+      ) {
+        changePlaybackRate(event, video);
       }
     };
 
@@ -62,15 +73,6 @@ const CoursePage = () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [video]);
-
-  if (video && sortedLessons?.[currentLesson].previewImageLink) {
-    const hls = new Hls();
-    if (!sortedLessons?.[currentLesson].link) {
-      router.push('/404');
-    }
-    hls.loadSource(sortedLessons?.[currentLesson].link || '');
-    hls.attachMedia(video);
-  }
 
   return (
     <div className={styles.page}>
@@ -82,14 +84,16 @@ const CoursePage = () => {
           </h3>
           <video
             className={styles.myVideo}
-            controls={true}
+            controls
             poster={poster}
             ref={videoRef}
-          ></video>
+          />
           <div className={styles.courseInfo}>
             <div>
-              <h6>*To speed up the video, press 1</h6>
-              <h6>*To slow down the video, press 0</h6>
+              <h6>*To speed up the video, press {VideoPlayerKeys.SPEED_UP}</h6>
+              <h6>
+                *To slow down the video, press {VideoPlayerKeys.SLOW_DOWN}
+              </h6>
             </div>
             <div>
               <h6 className={styles.date}>
