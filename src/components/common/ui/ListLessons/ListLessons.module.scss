@@ -5,14 +5,6 @@
   align-items: center;
 }
 
-.button {
-  width: 100%;
-  height: fit-content;
-  font-weight: bold;
-  border-radius: 5px;
-  margin-top: 15px;
-}
-
 .video {
   width: 100%;
   max-height: 250px;
@@ -35,17 +27,6 @@
   border-radius: 10px;
   margin-bottom: 40px;
   border: 1px solid brown;
-}
-
-.arrowCircleUpOutlinedIcon {
-  width: 24px;
-  height: 24px;
-}
-
-.blockIcon {
-  width: 24px;
-  height: 24px;
-  margin-bottom: 10px;
 }
 
 @media (max-width: 720px) {

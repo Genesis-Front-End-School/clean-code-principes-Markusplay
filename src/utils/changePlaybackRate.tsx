@@ -1,9 +1,9 @@
-import { VideoPlayerKeys } from './constants';
+import { VideoPlayerKeys } from './constants/constants';
 
-export function changePlaybackRate(
+export const changePlaybackRate = (
   event: KeyboardEvent,
   video: HTMLVideoElement,
-) {
+) => {
   switch (event.key) {
     case VideoPlayerKeys.SPEED_UP:
       video.playbackRate += VideoPlayerKeys.SPEED_UP_STEP;
@@ -16,4 +16,4 @@ export function changePlaybackRate(
     default:
       break;
   }
-}
+};

@@ -14,11 +14,11 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    },
+    // "paths": {
+    //   "@/*": ["./src/*"]
+    // },
     
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jest.config.ts", "src/__tests__/useSortLessons.test.ts", "src/__tests__/NotFoundPage.test.js", "src/__tests__/404.test.js", "src/__tests__/index.test.js", "src/__tests__/_app.test.", "src/__tests__/Skills.test.js", "src/__tests__/instance.test.js", "src/__tests__/[courseId].test.js", "src/__tests__/sortLessons.test.ts", "src/__tests__/Disabled.test.js", "src/__tests__/EnabledButton.test.js", "src/__tests__/EnabledButton.test.js", "src/__tests__/Lesson.test.js", "src/__tests__/CourseCard.test.ts", "src/__tests__/MainPage.test.js"],
   "exclude": ["node_modules"]
 }

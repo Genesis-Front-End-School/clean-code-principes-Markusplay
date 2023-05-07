@@ -3,31 +3,25 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import Hls from 'hls.js';
 import { useRouter } from 'next/router';
 
-import ListLessons from '@/components/common/ui/ListLessons';
-import { useAppDispatch, useAppSelector } from '@/hooks/useSelect';
-import { fetchLessons } from '@/redux/lessons/asyncActions';
-import { selectDetails } from '@/redux/lessons/selectors';
-import { Lesson, Lessons } from '@/redux/lessons/type';
-import { changePlaybackRate } from '@/utils/constants/changePlaybackRate';
-import { VideoPlayerKeys } from '@/utils/constants/constants';
+import ListLessons from '../../components/common/ui/ListLessons';
+import { useAppDispatch, useAppSelector } from '../../hooks/useSelect';
+import { fetchLessons } from '../../redux/lessons/asyncActions';
+import { selectDetails } from '../../redux/lessons/selectors';
+import { Lesson } from '../../redux/lessons/type';
+import { changePlaybackRate } from '../../utils/changePlaybackRate';
+import { VideoPlayerKeys } from '../../utils/constants/constants';
+import { sortLessons } from '../../utils/sortLessons';
 
 import styles from './CoursePage.module.scss';
 
 const CoursePage = () => {
   const router = useRouter();
-  const [currentLesson, setCurrentLesson] = useState<number>(0);
+  const [currentLesson, setCurrentLesson] = useState(0);
   const courseId: string = router.query.courseId as string;
-  const lessons: Lessons | null = useAppSelector(selectDetails);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const video: HTMLVideoElement | null = videoRef.current;
+  const lessons = useAppSelector(selectDetails);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const video = videoRef.current;
   const dispatch = useAppDispatch();
-
-  const sortLessons = (lessons: Lesson[] | undefined): Lesson[] => {
-    if (lessons) {
-      return lessons.slice().sort((a, b) => a.order - b.order);
-    }
-    return [];
-  };
 
   const sortedLessons = useMemo((): Lesson[] => {
     return sortLessons(lessons?.lessons);
