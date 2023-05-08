@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import DisabledButton from '../components/common/ui/ListLessons/components/DisabledButton/DisabledButton';
+import DisabledButton from './DisabledButton';
 
 describe('DisabledButton', () => {
   it('renders the button with the correct title and icon', () => {

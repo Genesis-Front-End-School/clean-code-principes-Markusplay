@@ -1,6 +1,7 @@
-import { CoursesSliceState } from '../redux/courses/type';
-import { Status } from '../redux/type';
-import { testCoursesData } from '../utils/constants/testData';
+import { testCoursesData } from '../../utils/constants/testData';
+import { Status } from '../type';
+
+import { CoursesSliceState } from './type';
 
 describe('Courses Type', () => {
   it('should render courses', () => {

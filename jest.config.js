@@ -47,5 +47,7 @@ module.exports = {
     'clean-code-principes-Markusplay/src/pages/index.tsx',
     '.prettierrc.js',
     '[courseId].tsx',
+    'redux/lessons/type.ts',
+    'redux/courses/type.ts',
   ],
 };

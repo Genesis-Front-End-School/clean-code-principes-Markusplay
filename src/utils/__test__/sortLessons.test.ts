@@ -1,5 +1,5 @@
-import { Lesson } from '../redux/lessons/type';
-import { sortLessons } from '../utils/sortLessons';
+import { Lesson } from '../../redux/lessons/type';
+import { sortLessons } from '../sortLessons';
 
 describe('sort lessons correctly', () => {
   it('should sort correctly lessons', () => {

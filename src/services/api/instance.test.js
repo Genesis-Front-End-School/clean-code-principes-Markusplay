@@ -1,4 +1,4 @@
-import axiosInstance from '../services/api/instance';
+import axiosInstance from './instance';
 
 describe('axiosInstance', () => {
   it('should have the correct base URL', () => {

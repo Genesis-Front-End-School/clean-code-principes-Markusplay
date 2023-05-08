@@ -1,6 +1,9 @@
-import { Course, CourseMeta, CourseVideoPreview, Status } from '../redux/type';
-
-import { testCourseData, testMetaData, testVideoPreviewData } from '../utils/constants/testData';
+import {
+  testCourseData,
+  testMetaData,
+  testVideoPreviewData,
+} from '../../utils/constants/testData';
+import { Course, CourseMeta, CourseVideoPreview, Status } from '../type';
 
 describe('Redux types', () => {
   it('CourseVideoPreview should have the correct properties', () => {

@@ -1,6 +1,6 @@
 import { fireEvent, render } from '@testing-library/react';
 
-import EnabledButton from '../components/common/ui/ListLessons/components/EnabledButton/EnabledButton';
+import EnabledButton from './EnabledButton';
 
 describe('EnabledButton', () => {
   it('should render the button with the correct text and icon', () => {

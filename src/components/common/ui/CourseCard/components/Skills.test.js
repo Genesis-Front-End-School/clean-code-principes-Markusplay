@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import Skills from '../components/common/ui/CourseCard/components/Skills';
+import Skills from './Skills';
 
 describe('render Skills', () => {
   it('should render a single skill', () => {

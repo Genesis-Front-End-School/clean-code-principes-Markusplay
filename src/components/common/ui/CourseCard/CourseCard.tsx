@@ -74,6 +74,7 @@ const CourseCard: FC<CourseCardProps> = ({ courseData }) => {
         className={styles.courseImg}
       />
       <video
+        role="video"
         loop
         className={styles.courseVideo}
         ref={videoRef}
