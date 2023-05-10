@@ -3,13 +3,13 @@ import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 
 import styles from './Skills.module.scss';
 
-interface SkillsProps {
+interface ISkillsProps {
   skills: string[];
 }
 
-const Skills: FC<SkillsProps> = ({ skills }) => {
+const Skills: FC<ISkillsProps> = ({ skills }) => {
   return (
-    <>
+    <div className={styles.skills}>
       <p>
         <AutoFixHighIcon
           data-testid="autoFixHighIcon"
@@ -24,7 +24,7 @@ const Skills: FC<SkillsProps> = ({ skills }) => {
           </i>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

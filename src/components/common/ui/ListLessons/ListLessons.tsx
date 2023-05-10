@@ -12,21 +12,19 @@ interface ListLessonsProps {
   previewImageLink: string;
   setCurrentLesson: Dispatch<SetStateAction<number>>;
   disabled: boolean;
-  order: number;
-  duration: number;
 }
 
-const ListLessons: FC<ListLessonsProps> = ({
-  title = 'video',
-  previewImageLink,
+const ListLessons: FC<IListLessonsProps> = ({
+  lesson,
   setCurrentLesson,
-  disabled,
-  order,
-  duration,
+  disabled = false,
 }) => {
   const [minutes, seconds] = useTime(duration);
 
   const poster = previewImageLink || './not-found.png';
+
+  const preview = `${previewImageLink}/lesson-${order}.webp`;
+  const poster = preview ? preview : './not-found.png';
 
   const handleClick = () => {
     setCurrentLesson(order - 1);

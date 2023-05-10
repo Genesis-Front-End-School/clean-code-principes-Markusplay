@@ -60,25 +60,8 @@
   display: block;
 }
 
-.date {
-  width: fit-content;
-  display: flex;
-  border: 2px solid red;
-  border-radius: 10px;
-  padding: 10px;
-}
-
 .content {
   margin-bottom: 30px;
-  margin-top: 20px;
-}
-
-.courseInfo {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  width: 100%;
-  height: fit-content;
   margin-top: 20px;
 }
 

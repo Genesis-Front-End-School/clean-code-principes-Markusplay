@@ -104,9 +104,7 @@ const CourseCard: FC<CourseCardProps> = ({ courseData }) => {
           </div>
         </div>
       </div>
-      <div className={styles.skills}>
-        {skills && <Skills skills={skills} />}
-      </div>
+      {skills && <Skills skills={skills} />}
       <div className={styles.tagRating}>
         <Link className={styles.button} href={`/preview-courses/${id}`}>
           <Button
@@ -118,15 +116,14 @@ const CourseCard: FC<CourseCardProps> = ({ courseData }) => {
             Explore
           </Button>
         </Link>
-        <div className={styles.rating}>
-          <Rating
-            name="read-only"
-            size="large"
-            value={rating}
-            precision={0.5}
-            readOnly
-          />
-        </div>
+        <Rating
+          className={styles.rating}
+          name="read-only"
+          size="large"
+          value={rating}
+          precision={0.5}
+          readOnly
+        />
       </div>
     </div>
   );
