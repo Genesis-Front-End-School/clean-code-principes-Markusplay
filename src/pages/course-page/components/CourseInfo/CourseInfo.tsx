@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 
 import { Lessons } from '../../../../redux/lessons/type';
@@ -11,6 +11,12 @@ interface ICourseInfo {
 }
 
 const CourseInfo: FC<ICourseInfo> = ({ lessons }) => {
+  const date = useMemo(() => {
+    return lessons?.launchDate
+      ? new Date(lessons?.launchDate).toLocaleDateString('en-GB')
+      : 'No date available';
+  }, [lessons]);
+
   return (
     <div className={styles.courseInfo}>
       <div>
@@ -20,10 +26,7 @@ const CourseInfo: FC<ICourseInfo> = ({ lessons }) => {
       <div>
         <h2 className={styles.date}>
           <CalendarTodayIcon />
-          Launch date:
-          {lessons?.launchDate
-            ? new Date(lessons?.launchDate).toLocaleDateString('en-GB')
-            : 'No date available'}
+          Launch date:{date}
         </h2>
       </div>
     </div>
