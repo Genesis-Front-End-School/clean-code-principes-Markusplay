@@ -90,9 +90,12 @@ const CoursePage = () => {
           {sortedLessons?.map(lesson => (
             <ListLessons
               key={lesson.id}
-              lesson={lesson}
               setCurrentLesson={setCurrentLesson}
               disabled={lesson.status !== 'unlocked'}
+              title={lesson.title}
+              previewImageLink={lesson.previewImageLink}
+              order={lesson.order}
+              duration={lesson.duration}
             />
           ))}
         </div>

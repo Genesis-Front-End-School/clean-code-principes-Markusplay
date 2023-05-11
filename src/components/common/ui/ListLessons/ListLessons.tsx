@@ -7,25 +7,27 @@ import LessonButton from './components/Button';
 
 import styles from './ListLessons.module.scss';
 
-interface ListLessonsProps {
+interface IListLessonsProps {
   title: string;
   previewImageLink: string;
   setCurrentLesson: Dispatch<SetStateAction<number>>;
   disabled: boolean;
+  order: number;
+  duration: number;
 }
 
 const ListLessons: FC<IListLessonsProps> = ({
-  lesson,
+  title,
+  previewImageLink,
+  duration,
+  order,
   setCurrentLesson,
   disabled = false,
 }) => {
   const [minutes, seconds] = useTime(duration);
 
-  const poster = previewImageLink || './not-found.png';
-
-  const preview = `${previewImageLink}/lesson-${order}.webp`;
-  const poster = preview ? preview : './not-found.png';
-
+  const poster =
+    `${previewImageLink}/lesson-${order}.webp` || './not-found.png';
   const handleClick = () => {
     setCurrentLesson(order - 1);
     window.scrollTo(0, 0);
