@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { Typography } from '@mui/material';
 import Hls from 'hls.js';
 import { useRouter } from 'next/router';
 
@@ -76,7 +77,9 @@ const CoursePage = () => {
       <p className={styles.title}>{lessons?.title}</p>
       <div className={styles.videoList}>
         <div className={styles.video}>
-          <h2 className={styles.subTitle}>Lesson: {title}</h2>
+          <Typography variant="h2" className={styles.subTitle}>
+            Lesson: {title}
+          </Typography>
           <video
             className={styles.myVideo}
             controls
@@ -90,9 +93,12 @@ const CoursePage = () => {
           {sortedLessons?.map(lesson => (
             <ListLessons
               key={lesson.id}
-              lesson={lesson}
               setCurrentLesson={setCurrentLesson}
               disabled={lesson.status !== 'unlocked'}
+              title={lesson.title}
+              previewImageLink={lesson.previewImageLink}
+              order={lesson.order}
+              duration={lesson.duration}
             />
           ))}
         </div>

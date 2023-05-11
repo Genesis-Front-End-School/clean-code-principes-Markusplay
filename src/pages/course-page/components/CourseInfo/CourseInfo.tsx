@@ -3,6 +3,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 
 import { Lessons } from '../../../../redux/lessons/type';
 import { VideoPlayerKeys } from '../../../../utils/constants/constants';
+import { getDate } from '../../../../utils/getDate';
 
 import styles from './CourseInfo.module.scss';
 
@@ -12,22 +13,20 @@ interface ICourseInfo {
 
 const CourseInfo: FC<ICourseInfo> = ({ lessons }) => {
   const date = useMemo(() => {
-    return lessons?.launchDate
-      ? new Date(lessons?.launchDate).toLocaleDateString('en-GB')
-      : 'No date available';
+    return getDate(lessons);
   }, [lessons]);
 
   return (
     <div className={styles.courseInfo}>
       <div>
-        <h3>*To speed up the video, press {VideoPlayerKeys.SPEED_UP}</h3>
-        <h3>*To slow down the video, press {VideoPlayerKeys.SLOW_DOWN}</h3>
+        <h4>*To speed up the video, press {VideoPlayerKeys.SPEED_UP}</h4>
+        <h4>*To slow down the video, press {VideoPlayerKeys.SLOW_DOWN}</h4>
       </div>
       <div>
-        <h2 className={styles.date}>
+        <h4 className={styles.date}>
           <CalendarTodayIcon />
           Launch date:{date}
-        </h2>
+        </h4>
       </div>
     </div>
   );

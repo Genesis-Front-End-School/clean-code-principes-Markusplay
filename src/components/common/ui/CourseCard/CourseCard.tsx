@@ -2,14 +2,14 @@ import { FC, useRef, useState } from 'react';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import { Button, Rating } from '@mui/material';
+import { Button, Link, Rating } from '@mui/material';
 import Hls from 'hls.js';
-import Link from 'next/link';
 
 import { useTime } from '../../../../hooks/useTime';
 import { Course } from '../../../../redux/type';
 
 import Skills from './components/Skills';
+import Tags from './components/Tags/Tags';
 
 import styles from './CourseCard.module.scss';
 
@@ -65,7 +65,7 @@ const CourseCard: FC<ICourseCardProps> = ({ courseData }) => {
   };
 
   return (
-    <div className={styles.courseCard}>
+    <div className="courseCard">
       <img
         src={`${previewImageLink}/cover.webp`}
         className={styles.courseImg}
@@ -81,14 +81,8 @@ const CourseCard: FC<ICourseCardProps> = ({ courseData }) => {
         muted
       />
       <div className={styles.courseInfo}>
-        <p className={styles.title}>{title}</p>
-        <div className={styles.tags}>
-          {tags.map(tag => (
-            <b className={styles.tag} key={tag}>
-              {tag}
-            </b>
-          ))}
-        </div>
+        <h4 className="course-card-title">{title}</h4>
+        <Tags tags={tags} />
         <p className={styles.description}>{description}</p>
         <div className={styles.lessonsTime}>
           <div className={styles.assignmentIcon}>
@@ -101,11 +95,13 @@ const CourseCard: FC<ICourseCardProps> = ({ courseData }) => {
           </div>
         </div>
       </div>
+
       {skills && <Skills skills={skills} />}
+
       <div className={styles.tagRating}>
-        <Link className={styles.button} href={`/preview-courses/${id}`}>
+        <Link underline="none" href={`/preview-courses/${id}`}>
           <Button
-            className={styles.button}
+            className="button"
             variant="contained"
             color="error"
             endIcon={<ArrowCircleRightIcon />}
