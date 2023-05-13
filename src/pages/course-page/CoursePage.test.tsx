@@ -20,8 +20,8 @@ jest.mock('../../hooks/useSelect', () => ({
 }));
 
 describe('CoursePage', () => {
-  const mockUseRouter = useRouter;
-  const mockUseAppSelector = useAppSelector;
+  const mockUseRouter = useRouter as jest.Mock;
+  const mockUseAppSelector = useAppSelector as jest.Mock;
 
   beforeEach(() => {
     mockUseRouter.mockReturnValue({
@@ -62,11 +62,7 @@ describe('CoursePage', () => {
       ],
     });
 
-    render(
-      <Provider>
-        <CoursePage />
-      </Provider>,
-    );
+    render(<CoursePage />);
 
     expect(screen.getByText('Mock Course Title')).toBeInTheDocument();
   });
@@ -98,11 +94,7 @@ describe('CoursePage', () => {
       ],
     });
 
-    render(
-      <Provider>
-        <CoursePage />
-      </Provider>,
-    );
+    render(<CoursePage />);
 
     expect(screen.getByRole('img')).toHaveAttribute(
       'src',

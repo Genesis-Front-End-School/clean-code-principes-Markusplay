@@ -6,6 +6,7 @@ import { Button, Rating } from '@mui/material';
 import Hls from 'hls.js';
 import Link from 'next/link';
 
+import { useTime } from '../../../../hooks/useTime';
 import { Course } from '../../../../redux/type';
 
 import Skills from './components/Skills';
@@ -37,9 +38,8 @@ const CourseCard: FC<CourseCardProps> = ({ courseData }) => {
 
   const [isVideoLinkBroken, setIsVideoLinkBroken] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [minutes, seconds] = useTime(duration);
   const video = videoRef.current;
-  const minutes = Math.floor(duration / 60);
-  const seconds = duration - minutes * 60;
 
   const poster =
     videoPreviewLink || videoPreviewImageLink

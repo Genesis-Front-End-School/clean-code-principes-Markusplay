@@ -1,4 +1,4 @@
-import { testCoursesData } from '../../utils/constants/testData';
+import { testCoursesData } from '../../utils/__mocks__/mockData';
 import { Status } from '../type';
 
 import { CoursesSliceState } from './type';

@@ -1,4 +1,4 @@
-import { testCourseData } from '../../utils/constants/testData';
+import { testCourseData } from '../../utils/__mocks__/mockData';
 import { CoursesSliceState } from '../courses/type';
 import { FetchLessonsParams, Lesson, Lessons } from '../lessons/type';
 import { Course, CourseMeta, Status } from '../type';
@@ -44,66 +44,36 @@ const FetchLessonsParamsMock = {
   id: 'id',
 };
 
-function courseMetaTestFunction(CourseMetaParam: CourseMeta) {
-  return CourseMetaParam;
-}
-
-function CourseTestFunction(CourseParam: Course) {
-  return CourseParam;
-}
-
-function CoursesSliceStateTestFunction(
-  CoursesSliceStateParam: CoursesSliceState,
-) {
-  return CoursesSliceStateParam;
-}
-
-function LessonTestFunction(LessonParam: Lesson) {
-  return LessonParam;
-}
-
-function LessonsTestFunction(LessonsParam: Lessons) {
-  return LessonsParam;
-}
-
-function FetchLessonsParamsTestFunction(
-  FetchLessonsParamsParam: FetchLessonsParams,
-) {
-  return FetchLessonsParamsParam;
-}
-
 describe('file in the redux directory with all global types', () => {
   it('has all enums', () => {
     expect(Status).toBeDefined();
   });
 
   it('has all types', () => {
-    const CourseMetaResult: CourseMeta = courseMetaTestFunction(CourseMetaMock);
+    const CourseMetaResult: CourseMeta = CourseMetaMock;
     expect(CourseMetaResult).toBeDefined();
 
-    const CourseResult: Course = CourseTestFunction(CourseMock);
+    const CourseResult: Course = CourseMock;
     expect(CourseResult).toBeDefined();
   });
 });
 
 describe('file for exporting course slice types', () => {
   it('has all interfaces', () => {
-    const CoursesSliceStateResult: CoursesSliceState =
-      CoursesSliceStateTestFunction(CoursesSliceStateMock);
+    const CoursesSliceStateResult: CoursesSliceState = CoursesSliceStateMock;
     expect(CoursesSliceStateResult).toBeDefined();
   });
 });
 
 describe('file for exporting course slice types', () => {
   it('has all interfaces and types', () => {
-    const LessonResult: Lesson = LessonTestFunction(LessonMock);
+    const LessonResult: Lesson = LessonMock;
     expect(LessonResult).toBeDefined();
 
-    const LessonsResult: Lessons = LessonsTestFunction(LessonsMock);
+    const LessonsResult: Lessons = LessonsMock;
     expect(LessonsResult).toBeDefined();
 
-    const FetchLessonsParamsResult: FetchLessonsParams =
-      FetchLessonsParamsTestFunction(FetchLessonsParamsMock);
+    const FetchLessonsParamsResult: FetchLessonsParams = FetchLessonsParamsMock;
     expect(FetchLessonsParamsResult).toBeDefined();
   });
 });

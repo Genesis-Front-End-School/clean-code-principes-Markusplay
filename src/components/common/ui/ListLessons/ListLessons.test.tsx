@@ -18,7 +18,6 @@ it('should render props correctly', () => {
 });
 
 it('should call setCurrentLesson and scroll to top when enabled button is clicked', () => {
-  const order = 2;
   const setCurrentLesson = jest.fn();
   window.scrollTo = jest.fn();
 
@@ -28,7 +27,7 @@ it('should call setCurrentLesson and scroll to top when enabled button is clicke
       previewImageLink="https://example.com/image.jpg"
       setCurrentLesson={setCurrentLesson}
       disabled={false}
-      order={order}
+      order={2}
       duration={120}
     />,
   );
@@ -36,6 +35,6 @@ it('should call setCurrentLesson and scroll to top when enabled button is clicke
   const enabledButton = screen.getByRole('button', { name: 'video' });
   fireEvent.click(enabledButton);
 
-  expect(setCurrentLesson).toHaveBeenCalledWith(order - 1);
+  expect(setCurrentLesson).toHaveBeenCalledWith(1);
   expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
 });

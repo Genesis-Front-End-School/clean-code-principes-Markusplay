@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import { CalendarToday } from '@mui/icons-material';
 import Hls from 'hls.js';
 import { useRouter } from 'next/router';
 
@@ -91,7 +91,7 @@ const CoursePage = () => {
             </div>
             <div>
               <h6 className={styles.date}>
-                <CalendarTodayIcon />
+                <CalendarToday />
                 Launch date:
                 {lessons?.launchDate
                   ? new Date(lessons?.launchDate).toLocaleDateString('en-GB')

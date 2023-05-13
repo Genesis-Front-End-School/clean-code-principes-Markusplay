@@ -1,15 +1,11 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 
-import DisabledButton from './components/DisabledButton/DisabledButton';
-import EnabledButton from './components/EnabledButton/EnabledButton';
+import { useTime } from '../../../../hooks/useTime';
+
+import LessonButton from './components/Button';
 
 import styles from './ListLessons.module.scss';
-
-export interface ListButtonProps {
-  title: string;
-  handleClick: () => void;
-}
 
 interface ListLessonsProps {
   title: string;
@@ -28,8 +24,9 @@ const ListLessons: FC<ListLessonsProps> = ({
   order,
   duration,
 }) => {
-  const minutes = Math.floor(duration / 60);
-  const seconds = duration - minutes * 60;
+  const [minutes, seconds] = useTime(duration);
+
+  const poster = previewImageLink || './not-found.png';
 
   const handleClick = () => {
     setCurrentLesson(order - 1);
@@ -38,17 +35,17 @@ const ListLessons: FC<ListLessonsProps> = ({
 
   return (
     <div className={styles.list}>
-      {disabled && <DisabledButton title={title} handleClick={handleClick} />}
       <div className={styles.item}>
-        <video
-          className={styles.video}
-          poster={previewImageLink ? previewImageLink : './not-found.png'}
-        />
+        <video className={styles.video} poster={poster} />
         <div className={styles.time}>
           <AccessTimeFilledIcon />
           {minutes}m {seconds}s
         </div>
-        <EnabledButton title={title} handleClick={handleClick} />
+        <LessonButton
+          title={title}
+          handleClick={handleClick}
+          disabled={disabled}
+        />
       </div>
     </div>
   );

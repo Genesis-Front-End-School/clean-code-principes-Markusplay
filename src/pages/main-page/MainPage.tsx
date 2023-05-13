@@ -7,20 +7,15 @@ import { fetchCourses } from '../../redux/courses/asyncActions';
 import { selectDetails } from '../../redux/courses/selectors';
 import { Course } from '../../redux/type';
 import { COURSES_PER_PAGE_LIMIT } from '../../utils/constants/constants';
+import { sortCourses } from '../../utils/sortCourses';
 
 import styles from './MainPage.module.scss';
 
 const MainPage = () => {
   const [pageNumber, setPageNumber] = useState(1);
 
-  const courses: Course[] | undefined = useAppSelector(selectDetails);
-  const sortedCourses: Course[] =
-    courses
-      ?.slice()
-      .sort(
-        (a: Course, b: Course) =>
-          new Date(b.launchDate).valueOf() - new Date(a.launchDate).valueOf(),
-      ) ?? [];
+  const courses: Course[] = useAppSelector(selectDetails);
+  const sortedCourses: Course[] = sortCourses(courses);
 
   const visitedPages: number = useMemo(() => {
     return (pageNumber - 1) * COURSES_PER_PAGE_LIMIT;

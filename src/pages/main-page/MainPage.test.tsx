@@ -1,7 +1,10 @@
 import { Provider } from 'react-redux';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { AnyAction, Store } from '@reduxjs/toolkit';
+import { render, screen } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+
+import { fetchCourses } from '../../redux/courses/asyncActions';
 
 import MainPage from './MainPage';
 
@@ -12,7 +15,7 @@ jest.mock('../../redux/courses/asyncActions', () => ({
 const mockStore = configureStore([thunk]);
 
 describe('MainPage', () => {
-  let store;
+  let store: Store<unknown, AnyAction>;
 
   beforeEach(() => {
     store = mockStore({

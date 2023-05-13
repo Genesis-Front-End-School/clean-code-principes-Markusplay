@@ -2,7 +2,7 @@ import {
   testCourseData,
   testMetaData,
   testVideoPreviewData,
-} from '../../utils/constants/testData';
+} from '../../utils/__mocks__/mockData';
 import { Course, CourseMeta, CourseVideoPreview, Status } from '../type';
 
 describe('Redux types', () => {

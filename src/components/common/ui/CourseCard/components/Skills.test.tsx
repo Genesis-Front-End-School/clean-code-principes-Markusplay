@@ -28,7 +28,7 @@ describe('render Skills', () => {
   });
 
   it('should render an empty list if no skills are provided', () => {
-    const skills = [];
+    const skills: string[] = [];
     const { queryByTestId } = render(<Skills skills={skills} />);
     expect(queryByTestId('skill')).not.toBeInTheDocument();
   });
