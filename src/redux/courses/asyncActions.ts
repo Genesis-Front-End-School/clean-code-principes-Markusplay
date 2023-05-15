@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import axiosInstance from '@/pages/api/instance';
-
+import axiosInstance from '../../services/api/instance';
 import { Course } from '../type';
 
 export const fetchCourses = createAsyncThunk<Course[]>(

@@ -1,7 +1,6 @@
 import { FC } from 'react';
 
-import { Course } from '@/redux/type';
-
+import { Course } from '../../../../redux/type';
 import CourseCard from '../CourseCard';
 
 interface CoursesPerPageProps {

@@ -1,13 +1,15 @@
-import React, { FC, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import { Button, Rating } from '@mui/material';
 import Hls from 'hls.js';
 import Link from 'next/link';
 
-import { Course } from '@/redux/type';
+import { useTime } from '../../../../hooks/useTime';
+import { Course } from '../../../../redux/type';
+
+import Skills from './components/Skills';
 
 import styles from './CourseCard.module.scss';
 
@@ -34,11 +36,10 @@ const CourseCard: FC<CourseCardProps> = ({ courseData }) => {
     },
   } = courseData;
 
-  const [isVideoLinkBroken, setIsVideoLinkBroken] = useState<boolean>(false);
+  const [isVideoLinkBroken, setIsVideoLinkBroken] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [minutes, seconds] = useTime(duration);
   const video = videoRef.current;
-  const minutes: number = Math.floor(duration / 60);
-  const seconds: number = duration - minutes * 60;
 
   const poster =
     videoPreviewLink || videoPreviewImageLink
@@ -73,6 +74,7 @@ const CourseCard: FC<CourseCardProps> = ({ courseData }) => {
         className={styles.courseImg}
       />
       <video
+        role="video"
         loop
         className={styles.courseVideo}
         ref={videoRef}
@@ -103,21 +105,7 @@ const CourseCard: FC<CourseCardProps> = ({ courseData }) => {
         </div>
       </div>
       <div className={styles.skills}>
-        {skills && (
-          <>
-            <p>
-              <AutoFixHighIcon className={styles.autoFixHighIcon} />
-              Skills
-            </p>
-            <div className={styles.skillsList}>
-              {skills?.map(skill => (
-                <i className={styles.skill} key={skill}>
-                  {skill}
-                </i>
-              ))}
-            </div>
-          </>
-        )}
+        {skills && <Skills skills={skills} />}
       </div>
       <div className={styles.tagRating}>
         <Link className={styles.button} href={`/preview-courses/${id}`}>

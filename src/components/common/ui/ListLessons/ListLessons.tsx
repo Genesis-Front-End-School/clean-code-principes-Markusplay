@@ -1,12 +1,13 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
-import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined';
-import BlockIcon from '@mui/icons-material/Block';
-import { Button } from '@mui/material';
+
+import { useTime } from '../../../../hooks/useTime';
+
+import LessonButton from './components/Button';
 
 import styles from './ListLessons.module.scss';
 
-export interface ListLessonsProps {
+interface ListLessonsProps {
   title: string;
   previewImageLink: string;
   setCurrentLesson: Dispatch<SetStateAction<number>>;
@@ -23,8 +24,9 @@ const ListLessons: FC<ListLessonsProps> = ({
   order,
   duration,
 }) => {
-  const minutes: number = Math.floor(duration / 60);
-  const seconds: number = duration - minutes * 60;
+  const [minutes, seconds] = useTime(duration);
+
+  const poster = previewImageLink || './not-found.png';
 
   const handleClick = () => {
     setCurrentLesson(order - 1);
@@ -33,41 +35,18 @@ const ListLessons: FC<ListLessonsProps> = ({
 
   return (
     <div className={styles.list}>
-      {disabled ? (
-        <Button
-          className={styles.button}
-          disabled={disabled}
-          endIcon={<BlockIcon className={styles.blockIcon} />}
-          onClick={handleClick}
-        >
-          <p className={styles.title}>{title}</p>
-        </Button>
-      ) : (
-        <div className={styles.item}>
-          <video
-            className={styles.video}
-            poster={previewImageLink ? previewImageLink : './not-found.png'}
-          />
-          <div className={styles.time}>
-            <AccessTimeFilledIcon />
-            {minutes}m {seconds}s
-          </div>
-          <Button
-            color="error"
-            variant="contained"
-            className={styles.button}
-            disabled={disabled}
-            endIcon={
-              <ArrowCircleUpOutlinedIcon
-                className={styles.arrowCircleUpOutlinedIcon}
-              />
-            }
-            onClick={handleClick}
-          >
-            <p className={styles.title}>{title}</p>
-          </Button>
+      <div className={styles.item}>
+        <video className={styles.video} poster={poster} />
+        <div className={styles.time}>
+          <AccessTimeFilledIcon />
+          {minutes}m {seconds}s
         </div>
-      )}
+        <LessonButton
+          title={title}
+          handleClick={handleClick}
+          disabled={disabled}
+        />
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import axiosInstance from '@/pages/api/instance';
+import axiosInstance from '../../services/api/instance';
 
 import { FetchLessonsParams, Lessons } from './type';
 
