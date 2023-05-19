@@ -1,10 +1,6 @@
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import Brightness5Icon from '@mui/icons-material/Brightness5';
-import ModeNightIcon from '@mui/icons-material/ModeNight';
-import { Box, Pagination } from '@mui/material';
-import { Switch } from '@mui/material';
+import { Pagination } from '@mui/material';
 
-import CoursesPerPage from '../../components/common/ui/CoursesPerPage';
 import { useAppDispatch, useAppSelector } from '../../hooks/useSelect';
 import { fetchCourses } from '../../redux/courses/asyncActions';
 import { selectDetails } from '../../redux/courses/selectors';
@@ -12,7 +8,9 @@ import { Course } from '../../redux/type';
 import { COURSES_PER_PAGE_LIMIT } from '../../utils/constants/constants';
 import { sortCourses } from '../../utils/sortCourses';
 
-import * as styles from './MainPage.styles';
+import CoursesPerPage from './components';
+
+import styles from './MainPage.module.scss';
 
 const MainPage = () => {
   const [pageNumber, setPageNumber] = useState(1);
@@ -32,7 +30,7 @@ const MainPage = () => {
 
   useEffect(() => {
     dispatch(fetchCourses());
-  }, [dispatch]);
+  });
 
   const handleChangePage = (_event: ChangeEvent<unknown>, value: number) => {
     setPageNumber(value);
@@ -40,14 +38,14 @@ const MainPage = () => {
   };
 
   return (
-    <Box sx={styles.mainContainer}>
+    <div className={styles.mainContainer}>
       <CoursesPerPage
-        sx={styles.coursesContainer}
+        className={styles.coursesContainer}
         courses={sortedCourses}
         coursesLimit={COURSES_PER_PAGE_LIMIT}
         visitedPages={visitedPages}
       />
-      <Box sx={styles.paginate}>
+      <div className={styles.paginate}>
         <Pagination
           role="navigation"
           count={pageCount}
@@ -56,8 +54,8 @@ const MainPage = () => {
           size="large"
           color="primary"
         />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
 

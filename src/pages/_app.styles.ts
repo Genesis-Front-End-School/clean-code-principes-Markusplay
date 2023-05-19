@@ -12,6 +12,7 @@ export const modeNightIcon: SxProps<Theme> = {
   marginLeft: '15px',
   marginTop: '3px',
 };
+
 export const brightness5Icon: SxProps<Theme> = {
   display: 'flex',
   alignItems: 'center',

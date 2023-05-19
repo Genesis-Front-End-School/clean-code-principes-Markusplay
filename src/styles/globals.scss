@@ -6,16 +6,16 @@ $background-dark: #1f1e1c;
 $text-color-dark: #1b1a1a;
 $text-color-light: #f7efef;
 
-$course-card-title: black;
+$course-card-title: #000000;
 
 $lesson-item-color-light: red;
-$lesson-item-color-dark: green;
+$lesson-item-color-dark: #50C878;
 
-$button-bg-light: brown;
-$button-bg-dark: greenyellow;
+$button-bg-light: #954535;
+$button-bg-dark: #00FF00;
 
-$button-text-light: white;
-$button-text-dark: black;
+$button-text-light: #ffffff;
+$button-text-dark: #000000;
 
 [data-theme='dark'] {
   background: $background-dark;
@@ -50,12 +50,12 @@ $button-text-dark: black;
     overflow: hidden;
     &:hover {
       box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
-      border: 2px dotted black;
+      border: 2px dotted #000000;
     }
   }
 
   .icon-color {
-    color: green;
+    color: #50C878;
   }
 }
 
@@ -157,7 +157,7 @@ input {
 .courseCard {
   width: 400px;
   height: 955px;
-  background-color: ghostwhite;
+  background-color: #F8F8FF;
   flex-direction: column;
   border-radius: 20px;
   position: relative;
@@ -165,10 +165,10 @@ input {
   overflow: hidden;
   &:hover {
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
-    border: 2px dotted black;
+    border: 2px dotted #000000;
   }
 }
 
 .icon-color {
-  color: brown;
+  color: #954535;
 }

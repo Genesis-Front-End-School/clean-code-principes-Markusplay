@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Typography } from '@mui/material';
 import Hls from 'hls.js';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 
-import ListLessons from '../../components/common/ui/ListLessons';
 import { useAppDispatch, useAppSelector } from '../../hooks/useSelect';
 import { fetchLessons } from '../../redux/lessons/asyncActions';
 import { selectDetails } from '../../redux/lessons/selectors';
@@ -15,6 +14,10 @@ import { sortLessons } from '../../utils/sortLessons';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 
 import styles from './CoursePage.module.scss';
+
+const ListLessons = dynamic(
+  () => import('../../components/common/ui/ListLessons'),
+);
 
 const CoursePage = () => {
   const router = useRouter();
@@ -35,15 +38,17 @@ const CoursePage = () => {
     ? `${sortedLessons?.[currentLesson]?.previewImageLink}/lesson-${sortedLessons?.[currentLesson]?.order}.webp`
     : './not-found.png';
 
-  if (video && sortedLessons?.[currentLesson]?.previewImageLink) {
-    const hls = new Hls();
+  useEffect(() => {
+    if (video && sortedLessons?.[currentLesson]?.previewImageLink) {
+      const hls = new Hls();
 
-    if (!sortedLessons?.[currentLesson].link) {
-      router.push('/404');
+      if (!sortedLessons?.[currentLesson].link) {
+        router.push('/404');
+      }
+      hls.loadSource(sortedLessons?.[currentLesson].link || '');
+      hls.attachMedia(video);
     }
-    hls.loadSource(sortedLessons?.[currentLesson].link || '');
-    hls.attachMedia(video);
-  }
+  }, [currentLesson, router, sortedLessons, video]);
 
   useEffect(() => {
     dispatch(
@@ -77,9 +82,7 @@ const CoursePage = () => {
       <p className={styles.title}>{lessons?.title}</p>
       <div className={styles.videoList}>
         <div className={styles.video}>
-          <Typography variant="h2" className={styles.subTitle}>
-            Lesson: {title}
-          </Typography>
+          <h4 className={styles.subTitle}>Lesson: {title}</h4>
           <video
             className={styles.myVideo}
             controls

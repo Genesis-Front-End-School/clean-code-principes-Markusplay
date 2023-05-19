@@ -1,15 +1,15 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useMemo, useRef } from 'react';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import { Button, Link, Rating } from '@mui/material';
+import { Button, Rating } from '@mui/material';
 import Hls from 'hls.js';
 
 import { useTime } from '../../../../hooks/useTime';
 import { Course } from '../../../../redux/type';
 
 import Skills from './components/Skills';
-import Tags from './components/Tags/Tags';
+import Tags from './components/Tags';
 
 import styles from './CourseCard.module.scss';
 
@@ -30,7 +30,6 @@ const CourseCard: FC<ICourseCardProps> = ({ courseData }) => {
     meta: { skills },
   } = courseData;
 
-  const [isVideoLinkBroken, setIsVideoLinkBroken] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [minutes, seconds] = useTime(duration);
   const video = videoRef.current;
@@ -43,18 +42,17 @@ const CourseCard: FC<ICourseCardProps> = ({ courseData }) => {
       ? `${videoPreviewImageLink}/cover.webp`
       : './not-found.png';
 
-  const handleMouseEnter = () => {
-    if (video && videoPreviewImageLink) {
+  useMemo(() => {
+    if (video && videoPreviewLink) {
       const hls = new Hls();
-
-      hls.on(Hls.Events.ERROR, function () {
-        setIsVideoLinkBroken(true);
-      });
       hls.loadSource(videoPreviewLink);
       hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        video.play();
-      });
+    }
+  }, [video, videoPreviewLink]);
+
+  const handleMouseEnter = () => {
+    if (video) {
+      video.play();
     }
   };
 
@@ -69,6 +67,9 @@ const CourseCard: FC<ICourseCardProps> = ({ courseData }) => {
       <img
         src={`${previewImageLink}/cover.webp`}
         className={styles.courseImg}
+        alt="Preview image"
+        width="400"
+        height="180"
       />
       <video
         role="video"
@@ -77,7 +78,7 @@ const CourseCard: FC<ICourseCardProps> = ({ courseData }) => {
         ref={videoRef}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        poster={!isVideoLinkBroken ? poster : './not-found.png'}
+        poster={poster}
         muted
       />
       <div className={styles.courseInfo}>
@@ -99,16 +100,15 @@ const CourseCard: FC<ICourseCardProps> = ({ courseData }) => {
       {skills && <Skills skills={skills} />}
 
       <div className={styles.tagRating}>
-        <Link underline="none" href={`/preview-courses/${id}`}>
-          <Button
-            className="button"
-            variant="contained"
-            color="error"
-            endIcon={<ArrowCircleRightIcon />}
-          >
-            Explore
-          </Button>
-        </Link>
+        <Button
+          href={`/preview-courses/${id}`}
+          className="button"
+          variant="contained"
+          color="error"
+          endIcon={<ArrowCircleRightIcon />}
+        >
+          Explore
+        </Button>
         <Rating
           className={styles.rating}
           name="read-only"

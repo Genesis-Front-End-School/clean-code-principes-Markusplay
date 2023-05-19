@@ -4,7 +4,6 @@ import Brightness5Icon from '@mui/icons-material/Brightness5';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
 import { Switch } from '@mui/material';
 import type { AppProps } from 'next/app';
-import NextNProgress from 'nextjs-progressbar';
 
 import { store } from '../redux/store';
 
@@ -29,7 +28,6 @@ export default function App({ Component, pageProps }: AppProps) {
   };
   return (
     <Provider store={store}>
-      <NextNProgress />
       <Component {...pageProps} />
       <Switch
         icon={<Brightness5Icon color="inherit" sx={styles.brightness5Icon} />}

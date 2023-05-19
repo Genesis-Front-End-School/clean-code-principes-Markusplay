@@ -1,28 +1,31 @@
 import { FC } from 'react';
-import { Box, SxProps, Theme } from '@mui/material';
+import dynamic from 'next/dynamic';
 
-import { Course } from '../../../../redux/type';
-import CourseCard from '../CourseCard';
+import { Course } from '../../../redux/type';
+
+const CourseCard = dynamic(
+  () => import('../../../components/common/ui/CourseCard'),
+);
 
 interface ICoursesPerPageProps {
   courses: Course[];
   visitedPages: number;
   coursesLimit: number;
-  sx: SxProps<Theme>;
+  className: any;
 }
 
 const CoursesPerPage: FC<ICoursesPerPageProps> = ({
   courses,
   visitedPages,
   coursesLimit,
-  sx,
+  className,
 }) => {
   return (
-    <Box sx={sx}>
+    <div className={className}>
       {courses.slice(visitedPages, visitedPages + coursesLimit).map(course => (
-        <CourseCard courseData={course} key={course.id} />
+        <CourseCard key={course.id} courseData={course} />
       ))}
-    </Box>
+    </div>
   );
 };
 
