@@ -4,9 +4,6 @@ const nextConfig = {
   images: {
     domains: ['wisey.app'],
   },
-  experimental: {
-    nextScriptWorkers: true,
-  },
 };
 
 module.exports = nextConfig;
