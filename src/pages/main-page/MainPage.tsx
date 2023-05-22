@@ -17,11 +17,11 @@ const MainPage = () => {
   const courses: Course[] = useAppSelector(selectDetails);
   const sortedCourses: Course[] = sortCourses(courses);
 
-  const visitedPages: number = useMemo(() => {
+  const visitedPages = useMemo(() => {
     return (pageNumber - 1) * COURSES_PER_PAGE_LIMIT;
   }, [pageNumber]);
 
-  const pageCount: number = useMemo(() => {
+  const pageCount = useMemo(() => {
     return Math.ceil(sortedCourses?.length / COURSES_PER_PAGE_LIMIT);
   }, [sortedCourses?.length]);
 

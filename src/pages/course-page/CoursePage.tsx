@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { CalendarToday } from '@mui/icons-material';
 import Hls from 'hls.js';
 import { useRouter } from 'next/router';
 
@@ -11,6 +10,8 @@ import { Lesson } from '../../redux/lessons/type';
 import { changePlaybackRate } from '../../utils/changePlaybackRate';
 import { VideoPlayerKeys } from '../../utils/constants/constants';
 import { sortLessons } from '../../utils/sortLessons';
+
+import CourseInfo from './components/CourseInfo/CourseInfo';
 
 import styles from './CoursePage.module.scss';
 
@@ -26,6 +27,8 @@ const CoursePage = () => {
   const sortedLessons = useMemo((): Lesson[] => {
     return sortLessons(lessons?.lessons);
   }, [lessons?.lessons]);
+
+  const title = sortedLessons?.[currentLesson]?.title;
 
   const poster = sortedLessons?.[currentLesson]?.previewImageLink
     ? `${sortedLessons?.[currentLesson]?.previewImageLink}/lesson-${sortedLessons?.[currentLesson]?.order}.webp`
@@ -73,44 +76,26 @@ const CoursePage = () => {
       <p className={styles.title}>{lessons?.title}</p>
       <div className={styles.videoList}>
         <div className={styles.video}>
-          <h3 className={styles.subTitle}>
-            Lesson: {sortedLessons?.[currentLesson]?.title}
-          </h3>
+          <h2 className={styles.subTitle}>Lesson: {title}</h2>
           <video
             className={styles.myVideo}
             controls
             poster={poster}
             ref={videoRef}
           />
-          <div className={styles.courseInfo}>
-            <div>
-              <h6>*To speed up the video, press {VideoPlayerKeys.SPEED_UP}</h6>
-              <h6>
-                *To slow down the video, press {VideoPlayerKeys.SLOW_DOWN}
-              </h6>
-            </div>
-            <div>
-              <h6 className={styles.date}>
-                <CalendarToday />
-                Launch date:
-                {lessons?.launchDate
-                  ? new Date(lessons?.launchDate).toLocaleDateString('en-GB')
-                  : 'No date available'}
-              </h6>
-            </div>
-          </div>
+          <CourseInfo lessons={lessons} />
         </div>
         <div className={styles.lessons}>
-          <h4 className={styles.content}>Lessons:</h4>
+          <h2 className={styles.content}>Lessons:</h2>
           {sortedLessons?.map(lesson => (
             <ListLessons
-              duration={lesson.duration}
-              setCurrentLesson={setCurrentLesson}
-              order={lesson.order}
               key={lesson.id}
-              title={lesson.title}
+              setCurrentLesson={setCurrentLesson}
               disabled={lesson.status !== 'unlocked'}
-              previewImageLink={`${lesson.previewImageLink}/lesson-${lesson.order}.webp`}
+              title={lesson.title}
+              previewImageLink={lesson.previewImageLink}
+              order={lesson.order}
+              duration={lesson.duration}
             />
           ))}
         </div>

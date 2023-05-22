@@ -3,14 +3,14 @@ import { FC } from 'react';
 import { Course } from '../../../../redux/type';
 import CourseCard from '../CourseCard';
 
-interface CoursesPerPageProps {
+interface ICoursesPerPageProps {
   courses: Course[];
   visitedPages: number;
   coursesLimit: number;
   className: string;
 }
 
-const CoursesPerPage: FC<CoursesPerPageProps> = ({
+const CoursesPerPage: FC<ICoursesPerPageProps> = ({
   courses,
   visitedPages,
   coursesLimit,
