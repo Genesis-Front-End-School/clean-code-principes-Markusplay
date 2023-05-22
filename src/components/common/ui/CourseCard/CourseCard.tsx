@@ -13,11 +13,11 @@ import Skills from './components/Skills';
 
 import styles from './CourseCard.module.scss';
 
-interface CourseCardProps {
+interface ICourseCardProps {
   courseData: Course;
 }
 
-const CourseCard: FC<CourseCardProps> = ({ courseData }) => {
+const CourseCard: FC<ICourseCardProps> = ({ courseData }) => {
   const {
     id,
     title,
@@ -27,13 +27,7 @@ const CourseCard: FC<CourseCardProps> = ({ courseData }) => {
     lessonsCount,
     previewImageLink,
     rating,
-    meta: {
-      skills,
-      courseVideoPreview: {
-        link: videoPreviewLink,
-        previewImageLink: videoPreviewImageLink,
-      },
-    },
+    meta: { skills },
   } = courseData;
 
   const [isVideoLinkBroken, setIsVideoLinkBroken] = useState(false);
@@ -41,6 +35,9 @@ const CourseCard: FC<CourseCardProps> = ({ courseData }) => {
   const [minutes, seconds] = useTime(duration);
   const video = videoRef.current;
 
+  const videoPreviewLink = courseData.meta?.courseVideoPreview?.link;
+  const videoPreviewImageLink =
+    courseData.meta?.courseVideoPreview?.previewImageLink;
   const poster =
     videoPreviewLink || videoPreviewImageLink
       ? `${videoPreviewImageLink}/cover.webp`
@@ -104,9 +101,7 @@ const CourseCard: FC<CourseCardProps> = ({ courseData }) => {
           </div>
         </div>
       </div>
-      <div className={styles.skills}>
-        {skills && <Skills skills={skills} />}
-      </div>
+      {skills && <Skills skills={skills} />}
       <div className={styles.tagRating}>
         <Link className={styles.button} href={`/preview-courses/${id}`}>
           <Button
@@ -118,15 +113,14 @@ const CourseCard: FC<CourseCardProps> = ({ courseData }) => {
             Explore
           </Button>
         </Link>
-        <div className={styles.rating}>
-          <Rating
-            name="read-only"
-            size="large"
-            value={rating}
-            precision={0.5}
-            readOnly
-          />
-        </div>
+        <Rating
+          className={styles.rating}
+          name="read-only"
+          size="large"
+          value={rating}
+          precision={0.5}
+          readOnly
+        />
       </div>
     </div>
   );
