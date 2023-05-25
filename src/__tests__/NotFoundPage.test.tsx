@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import NotFoundPage from './NotFoundPage';
+import NotFoundPage from '../pages/404-page/NotFoundPage';
 
 it('should render a title and a button', () => {
   render(<NotFoundPage />);

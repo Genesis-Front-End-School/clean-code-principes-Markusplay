@@ -1,15 +1,14 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useMemo, useRef } from 'react';
+import { Button, Skills, Tags } from '@markusplay/markus-ui-lib';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import { Button, Rating } from '@mui/material';
+import LabelImportantIcon from '@mui/icons-material/LabelImportant';
+import { Rating } from '@mui/material';
 import Hls from 'hls.js';
-import Link from 'next/link';
 
-import { useTime } from '../../../../hooks/useTime';
-import { Course } from '../../../../redux/type';
-
-import Skills from './components/Skills';
+import { useTime } from '../../hooks/useTime';
+import { Course } from '../../redux/type';
 
 import styles from './CourseCard.module.scss';
 
@@ -30,7 +29,6 @@ const CourseCard: FC<ICourseCardProps> = ({ courseData }) => {
     meta: { skills },
   } = courseData;
 
-  const [isVideoLinkBroken, setIsVideoLinkBroken] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [minutes, seconds] = useTime(duration);
   const video = videoRef.current;
@@ -43,18 +41,17 @@ const CourseCard: FC<ICourseCardProps> = ({ courseData }) => {
       ? `${videoPreviewImageLink}/cover.webp`
       : './not-found.png';
 
-  const handleMouseEnter = () => {
-    if (video && videoPreviewImageLink) {
+  useMemo(() => {
+    if (video && videoPreviewLink) {
       const hls = new Hls();
-
-      hls.on(Hls.Events.ERROR, function () {
-        setIsVideoLinkBroken(true);
-      });
       hls.loadSource(videoPreviewLink);
       hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        video.play();
-      });
+    }
+  }, [video, videoPreviewLink]);
+
+  const handleMouseEnter = () => {
+    if (video) {
+      video.play();
     }
   };
 
@@ -65,10 +62,13 @@ const CourseCard: FC<ICourseCardProps> = ({ courseData }) => {
   };
 
   return (
-    <div className={styles.courseCard}>
+    <div className="courseCard">
       <img
         src={`${previewImageLink}/cover.webp`}
         className={styles.courseImg}
+        alt="Preview image"
+        width="400"
+        height="180"
       />
       <video
         role="video"
@@ -77,17 +77,13 @@ const CourseCard: FC<ICourseCardProps> = ({ courseData }) => {
         ref={videoRef}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        poster={!isVideoLinkBroken ? poster : './not-found.png'}
+        poster={poster}
         muted
       />
       <div className={styles.courseInfo}>
-        <p className={styles.title}>{title}</p>
+        <h4 className="course-card-title">{title}</h4>
         <div className={styles.tags}>
-          {tags.map(tag => (
-            <b className={styles.tag} key={tag}>
-              {tag}
-            </b>
-          ))}
+          <Tags tags={tags} className={styles.tag} tagClassName={''} />
         </div>
         <p className={styles.description}>{description}</p>
         <div className={styles.lessonsTime}>
@@ -101,18 +97,28 @@ const CourseCard: FC<ICourseCardProps> = ({ courseData }) => {
           </div>
         </div>
       </div>
-      {skills && <Skills skills={skills} />}
+
+      <div className={styles.skillTitle}>
+        <LabelImportantIcon />
+        <p>Skills</p>
+      </div>
+
+      {skills && (
+        <Skills
+          skills={skills}
+          className={styles.skills}
+          skillClassName={styles.skillClassName}
+        />
+      )}
+
       <div className={styles.tagRating}>
-        <Link className={styles.button} href={`/preview-courses/${id}`}>
-          <Button
-            className={styles.button}
-            variant="contained"
-            color="error"
-            endIcon={<ArrowCircleRightIcon />}
-          >
-            Explore
-          </Button>
-        </Link>
+        <Button
+          text="Explore"
+          href={`/preview-courses/${id}`}
+          className="button"
+          endIcon={<ArrowCircleRightIcon />}
+        />
+
         <Rating
           className={styles.rating}
           name="read-only"

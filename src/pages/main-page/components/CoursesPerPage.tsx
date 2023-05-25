@@ -1,13 +1,16 @@
 import { FC } from 'react';
+import React from 'react';
+import dynamic from 'next/dynamic';
 
-import { Course } from '../../../../redux/type';
-import CourseCard from '../CourseCard';
+import { Course } from '../../../redux/type';
+
+const CourseCard = dynamic(() => import('../../../components/CourseCard'));
 
 interface ICoursesPerPageProps {
   courses: Course[];
   visitedPages: number;
   coursesLimit: number;
-  className: string;
+  className: any;
 }
 
 const CoursesPerPage: FC<ICoursesPerPageProps> = ({
@@ -19,7 +22,7 @@ const CoursesPerPage: FC<ICoursesPerPageProps> = ({
   return (
     <div className={className}>
       {courses.slice(visitedPages, visitedPages + coursesLimit).map(course => (
-        <CourseCard courseData={course} key={course.id} />
+        <CourseCard key={course.id} courseData={course} />
       ))}
     </div>
   );
