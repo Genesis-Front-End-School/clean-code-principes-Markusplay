@@ -8,11 +8,11 @@ $text-color-light: #f7efef;
 
 $course-card-title: #000000;
 
-$lesson-item-color-light: #FF0000;
-$lesson-item-color-dark: #50C878;
+$lesson-item-color-light: #ff0000;
+$lesson-item-color-dark: #50c878;
 
 $button-bg-light: #954535;
-$button-bg-dark: #00FF00;
+$button-bg-dark: #00ff00;
 
 $button-text-light: #ffffff;
 $button-text-dark: #000000;
@@ -37,6 +37,11 @@ $button-text-dark: #000000;
   }
 
   .button {
+    width: 100%;
+    height: fit-content;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 15px;
     background: $button-bg-dark;
     color: $button-text-dark;
   }
@@ -55,7 +60,7 @@ $button-text-dark: #000000;
   }
 
   .icon-color {
-    color: #50C878;
+    color: #50c878;
   }
 }
 
@@ -157,7 +162,7 @@ input {
 .courseCard {
   width: 400px;
   height: 955px;
-  background-color: #F8F8FF;
+  background-color: #f8f8ff;
   flex-direction: column;
   border-radius: 20px;
   position: relative;

@@ -1,11 +1,10 @@
 import { FC } from 'react';
+import React from 'react';
 import dynamic from 'next/dynamic';
 
 import { Course } from '../../../redux/type';
 
-const CourseCard = dynamic(
-  () => import('../../../components/common/ui/CourseCard'),
-);
+const CourseCard = dynamic(() => import('../../../components/CourseCard'));
 
 interface ICoursesPerPageProps {
   courses: Course[];

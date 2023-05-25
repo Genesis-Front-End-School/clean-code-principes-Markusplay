@@ -1,10 +1,8 @@
 import { Dispatch, FC, SetStateAction } from 'react';
+import { Button } from '@markusplay/markus-ui-lib';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
-import { Typography } from '@mui/material';
 
-import { useTime } from '../../../../hooks/useTime';
-
-import LessonButton from './components/Button';
+import { useTime } from '../../hooks/useTime';
 
 import styles from './ListLessons.module.scss';
 
@@ -38,12 +36,13 @@ const ListLessons: FC<IListLessonsProps> = ({
     <div className={styles.list}>
       <div className="item">
         <video className={styles.video} poster={poster} />
-        <Typography variant="h6" className={styles.time}>
+        <h6 className={styles.time}>
           <AccessTimeFilledIcon />
           {minutes}m {seconds}s
-        </Typography>
-        <LessonButton
-          title={title}
+        </h6>
+        <Button
+          text={title}
+          className="button"
           handleClick={handleClick}
           disabled={disabled}
         />

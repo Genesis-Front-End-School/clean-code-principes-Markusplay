@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import Brightness5Icon from '@mui/icons-material/Brightness5';

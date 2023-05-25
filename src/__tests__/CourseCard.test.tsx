@@ -1,9 +1,8 @@
 import { render, screen } from '@testing-library/react';
 
-import { Course } from '../../../../redux/type';
-import { testCourseData } from '../../../../utils/__mocks__/mockData';
-
-import CourseCard from '.';
+import CourseCard from '../components/CourseCard';
+import { Course } from '../redux/type';
+import { testCourseData } from '../utils/__mocks__/mockData';
 const pauseMock = jest.fn();
 const playMock = jest.fn();
 describe('CourseCard', () => {

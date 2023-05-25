@@ -10,10 +10,10 @@
     "test": "jest --coverage"
   },
   "dependencies": {
-    "@builder.io/partytown": "^0.8.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^4.5.8",
+    "@markusplay/markus-ui-lib": "^0.1.1",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.13.1",
     "@next/bundle-analyzer": "^13.4.2",

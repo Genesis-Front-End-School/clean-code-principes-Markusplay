@@ -1,9 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { useRouter } from 'next/router';
 
-import { useAppSelector } from '../../hooks/useSelect';
-
-import CoursePage from './CoursePage';
+import { useAppSelector } from '../hooks/useSelect';
+import CoursePage from '../pages/course-page/CoursePage';
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),

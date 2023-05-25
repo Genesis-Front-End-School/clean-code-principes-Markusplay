@@ -4,9 +4,8 @@ import { render, screen } from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { fetchCourses } from '../../redux/courses/asyncActions';
-
-import MainPage from './MainPage';
+import MainPage from '../pages/main-page/MainPage';
+import { fetchCourses } from '../redux/courses/asyncActions';
 
 jest.mock('../../redux/courses/asyncActions', () => ({
   fetchCourses: jest.fn(),

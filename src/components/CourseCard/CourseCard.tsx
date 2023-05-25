@@ -1,15 +1,14 @@
 import { FC, useMemo, useRef } from 'react';
+import { Button, Skills, Tags } from '@markusplay/markus-ui-lib';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import { Button, Rating } from '@mui/material';
+import LabelImportantIcon from '@mui/icons-material/LabelImportant';
+import { Rating } from '@mui/material';
 import Hls from 'hls.js';
 
-import { useTime } from '../../../../hooks/useTime';
-import { Course } from '../../../../redux/type';
-
-import Skills from './components/Skills';
-import Tags from './components/Tags';
+import { useTime } from '../../hooks/useTime';
+import { Course } from '../../redux/type';
 
 import styles from './CourseCard.module.scss';
 
@@ -83,7 +82,9 @@ const CourseCard: FC<ICourseCardProps> = ({ courseData }) => {
       />
       <div className={styles.courseInfo}>
         <h4 className="course-card-title">{title}</h4>
-        <Tags tags={tags} />
+        <div className={styles.tags}>
+          <Tags tags={tags} className={styles.tag} tagClassName={''} />
+        </div>
         <p className={styles.description}>{description}</p>
         <div className={styles.lessonsTime}>
           <div className={styles.assignmentIcon}>
@@ -97,18 +98,27 @@ const CourseCard: FC<ICourseCardProps> = ({ courseData }) => {
         </div>
       </div>
 
-      {skills && <Skills skills={skills} />}
+      <div className={styles.skillTitle}>
+        <LabelImportantIcon />
+        <p>Skills</p>
+      </div>
+
+      {skills && (
+        <Skills
+          skills={skills}
+          className={styles.skills}
+          skillClassName={styles.skillClassName}
+        />
+      )}
 
       <div className={styles.tagRating}>
         <Button
+          text="Explore"
           href={`/preview-courses/${id}`}
           className="button"
-          variant="contained"
-          color="error"
           endIcon={<ArrowCircleRightIcon />}
-        >
-          Explore
-        </Button>
+        />
+
         <Rating
           className={styles.rating}
           name="read-only"

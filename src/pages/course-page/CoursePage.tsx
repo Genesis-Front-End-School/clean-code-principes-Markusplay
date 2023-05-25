@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import React from 'react';
 import Hls from 'hls.js';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -15,9 +16,7 @@ import CourseInfo from './components/CourseInfo/CourseInfo';
 
 import styles from './CoursePage.module.scss';
 
-const ListLessons = dynamic(
-  () => import('../../components/common/ui/ListLessons'),
-);
+const ListLessons = dynamic(() => import('../../components/ListLessons'));
 
 const CoursePage = () => {
   const router = useRouter();
