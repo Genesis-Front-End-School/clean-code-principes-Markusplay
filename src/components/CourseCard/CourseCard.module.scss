@@ -62,31 +62,6 @@
   text-decoration: none;
 }
 
-.tagRating {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  width: 100%;
-  bottom: 0;
-  margin-bottom: 10px;
-}
-
-.assignmentIcon {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-@media (max-width: 480px) {
-  .courseCard {
-    width: fit-content;
-    height: 920px;
-    border-radius: 20px;
-    position: relative;
-  }
-}
-
 .tag {
   display: flex;
   align-items: center;
@@ -102,6 +77,22 @@
   overflow-x: auto;
   display: flex;
   gap: 10px;
+}
+
+.tagRating {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  bottom: 0;
+  margin-bottom: 10px;
+}
+
+.assignmentIcon {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .autoFixHighIcon {
@@ -123,4 +114,13 @@
 .skillTitle{
   display: flex;
   margin-left: 10px;
+}
+
+@media (max-width: 480px) {
+  .courseCard {
+    width: fit-content;
+    height: 920px;
+    border-radius: 20px;
+    position: relative;
+  }
 }
