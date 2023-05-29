@@ -1,13 +1,14 @@
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { Pagination } from '@mui/material';
 
-import CoursesPerPage from '../../components/common/ui/CoursesPerPage';
 import { useAppDispatch, useAppSelector } from '../../hooks/useSelect';
 import { fetchCourses } from '../../redux/courses/asyncActions';
 import { selectDetails } from '../../redux/courses/selectors';
 import { Course } from '../../redux/type';
 import { COURSES_PER_PAGE_LIMIT } from '../../utils/constants/constants';
 import { sortCourses } from '../../utils/sortCourses';
+
+import CoursesPerPage from './components';
 
 import styles from './MainPage.module.scss';
 
@@ -29,7 +30,7 @@ const MainPage = () => {
 
   useEffect(() => {
     dispatch(fetchCourses());
-  }, [dispatch]);
+  });
 
   const handleChangePage = (_event: ChangeEvent<unknown>, value: number) => {
     setPageNumber(value);

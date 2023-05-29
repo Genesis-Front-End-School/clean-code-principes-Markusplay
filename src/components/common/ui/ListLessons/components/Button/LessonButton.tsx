@@ -29,9 +29,8 @@ const LessonButton: FC<ListButtonProps> = ({
         </Button>
       ) : (
         <Button
-          color="error"
           variant="contained"
-          className={styles.button}
+          className="button"
           endIcon={
             <ArrowCircleUpOutlinedIcon
               className={styles.arrowCircleUpOutlinedIcon}

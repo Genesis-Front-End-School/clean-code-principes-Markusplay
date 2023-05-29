@@ -19,9 +19,9 @@ const Skills: FC<ISkillsProps> = ({ skills }) => {
       </p>
       <div className={styles.skillsList}>
         {skills?.map(skill => (
-          <i data-testid="skill" className={styles.skill} key={skill}>
+          <div data-testid="skill" className={styles.skill} key={skill}>
             {skill}
-          </i>
+          </div>
         ))}
       </div>
     </div>

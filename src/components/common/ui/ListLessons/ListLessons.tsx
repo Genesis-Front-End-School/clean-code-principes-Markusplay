@@ -1,5 +1,6 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
+import { Typography } from '@mui/material';
 
 import { useTime } from '../../../../hooks/useTime';
 
@@ -35,12 +36,12 @@ const ListLessons: FC<IListLessonsProps> = ({
 
   return (
     <div className={styles.list}>
-      <div className={styles.item}>
+      <div className="item">
         <video className={styles.video} poster={poster} />
-        <div className={styles.time}>
+        <Typography variant="h6" className={styles.time}>
           <AccessTimeFilledIcon />
           {minutes}m {seconds}s
-        </div>
+        </Typography>
         <LessonButton
           title={title}
           handleClick={handleClick}
